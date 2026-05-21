@@ -23,7 +23,6 @@ docker-compose*.yml
 .dockerignore
 
 # Source maps & config files (not in production)
-scripts/*
-!scripts/cleanup-google-services.php
+# Scripts (keep only google services cleanup)
 stubs/
 tsconfig.json
