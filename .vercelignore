@@ -25,5 +25,4 @@ docker-compose*.yml
 # Source maps & config files (not in production)
 scripts/
 stubs/
-tailwind.config.js
 tsconfig.json
