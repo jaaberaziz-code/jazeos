@@ -1,0 +1,29 @@
+# Tests
+tests/
+phpunit.xml
+
+# Documentation and plans
+*.md
+docs/
+*.txt
+
+# Dev/CI config
+.github/
+.claude/
+.junie/
+.devcontainer/
+.gitattributes
+.editorconfig
+AGENTS.md
+CLAUDE.md
+
+# Docker (not needed on Vercel)
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Source maps & config files (not in production)
+scripts/
+stubs/
+tailwind.config.js
+tsconfig.json

@@ -47,7 +47,8 @@
         "post-autoload-dump": [
             "@php artisan config:clear",
             "@php artisan clear-compiled",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "bash -c 'for d in vendor/google/apiclient-services/src/Google/Service/*/; do case \"${d%%/}\" in */Gmail|*/Oauth2) ;; *) rm -rf \"$d\" ;; esac; done'"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
