@@ -386,6 +386,12 @@ Route::middleware('auth')->group(function () {
             Route::post('reorder', [CycleMenuItemController::class, 'reorder'])->name('reorder');
         });
 
+        // Habits Routes
+        Route::resource('habits', \App\Http\Controllers\HabitController::class);
+        Route::post('habits/{habit}/log', [\App\Http\Controllers\HabitController::class, 'log'])->name('habits.log');
+        Route::post('habits/{habit}/unlog', [\App\Http\Controllers\HabitController::class, 'unlog'])->name('habits.unlog');
+        Route::get('habits/{habit}/calendar', [\App\Http\Controllers\HabitController::class, 'calendar'])->name('habits.calendar');
+
         // Holidays Routes
         Route::get('/holidays', [HolidayController::class, 'index'])->name('holidays.index');
 

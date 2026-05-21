@@ -1,5 +1,5 @@
 import { Link, usePage, router } from '@inertiajs/react'
-import { Bell, Menu, Moon, Sun, Settings, LogOut, User } from 'lucide-react'
+import { Bell, Menu, Moon, Sun, Settings, LogOut, User, Languages } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
 import {
@@ -10,6 +10,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import type { SharedProps } from '@/types'
+import { useLanguage } from '@/hooks/use-language'
 
 interface TopbarProps {
     onMenuToggle: () => void
@@ -18,9 +19,10 @@ interface TopbarProps {
 export function Topbar({ onMenuToggle }: TopbarProps) {
     const { auth, notifications } = usePage<SharedProps>().props
     const { theme, setTheme } = useTheme()
+    const { t, locale, toggleLocale, dir } = useLanguage()
 
     return (
-        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-background px-4 lg:px-6">
+        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-background px-4 lg:px-6" dir={dir}>
             <div className="flex items-center gap-4">
                 <Button
                     variant="ghost"
@@ -33,6 +35,17 @@ export function Topbar({ onMenuToggle }: TopbarProps) {
             </div>
 
             <div className="flex items-center gap-2">
+                {/* Language switcher */}
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={toggleLocale}
+                    className="gap-1.5 font-semibold"
+                >
+                    <Languages className="h-4 w-4" />
+                    <span className="text-xs">{locale === 'en' ? 'عربي' : 'EN'}</span>
+                </Button>
+
                 {/* Dark mode toggle */}
                 <Button
                     variant="ghost"
@@ -41,7 +54,7 @@ export function Topbar({ onMenuToggle }: TopbarProps) {
                 >
                     <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                     <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                    <span className="sr-only">Toggle theme</span>
+                    <span className="sr-only">{t.topbar.toggleTheme}</span>
                 </Button>
 
                 {/* Notifications */}
@@ -63,7 +76,7 @@ export function Topbar({ onMenuToggle }: TopbarProps) {
                             <User className="h-4 w-4" />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuContent align={locale === 'ar' ? 'start' : 'end'} className="w-48">
                         {auth?.user && (
                             <>
                                 <div className="px-2 py-1.5">
@@ -76,13 +89,13 @@ export function Topbar({ onMenuToggle }: TopbarProps) {
                         <DropdownMenuItem asChild>
                             <Link href="/profile">
                                 <User className="mr-2 h-4 w-4" />
-                                Profile
+                                {t.topbar.profile}
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                             <Link href="/settings">
                                 <Settings className="mr-2 h-4 w-4" />
-                                Settings
+                                {t.topbar.settings}
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
@@ -91,7 +104,7 @@ export function Topbar({ onMenuToggle }: TopbarProps) {
                             className="text-destructive"
                         >
                             <LogOut className="mr-2 h-4 w-4" />
-                            Log out
+                            {t.topbar.logOut}
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

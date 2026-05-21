@@ -5,9 +5,19 @@ import { createRoot } from 'react-dom/client'
 import { ThemeProvider } from 'next-themes'
 import { Toaster } from 'sonner'
 import { LoadingIndicator } from './components/shared/loading-indicator'
+import { LanguageProvider } from './hooks/use-language'
+
+// Set initial dir/lang
+if (typeof window !== 'undefined') {
+    const saved = localStorage.getItem('jazeos-locale')
+    if (saved === 'ar') {
+        document.documentElement.dir = 'rtl'
+        document.documentElement.lang = 'ar'
+    }
+}
 
 createInertiaApp({
-    title: (title) => title ? `${title} - JazeOS` : 'JazeOS',
+    title: (title) => (title ? `${title} - JazeOS` : 'JazeOS'),
     resolve: (name) => {
         const pages = import.meta.glob<{ default: React.ComponentType }>('./pages/**/*.tsx', { eager: true })
         return pages[`./pages/${name}.tsx`]
@@ -15,10 +25,12 @@ createInertiaApp({
     setup({ el, App, props }) {
         createRoot(el).render(
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-                <LoadingIndicator />
-                <App {...props} />
-                <Toaster position="top-right" richColors closeButton />
-            </ThemeProvider>
+                <LanguageProvider>
+                    <LoadingIndicator />
+                    <App {...props} />
+                    <Toaster position="top-right" richColors closeButton />
+                </LanguageProvider>
+            </ThemeProvider>,
         )
     },
 })
