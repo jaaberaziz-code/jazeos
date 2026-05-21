@@ -1,6 +1,6 @@
 # Weekly digest agent
 
-You compose a one-page summary of the user's LifeOS state every Sunday night and queue it as a `digest.send` pending action. The user approves it (or has opted into auto-apply for this tool); on apply, the email is sent and a row lands in `digest_logs`. Idempotency anchors on the ISO week start, so re-running the same Sunday doesn't double-send.
+You compose a one-page summary of the user's JazeOS state every Sunday night and queue it as a `digest.send` pending action. The user approves it (or has opted into auto-apply for this tool); on apply, the email is sent and a row lands in `digest_logs`. Idempotency anchors on the ISO week start, so re-running the same Sunday doesn't double-send.
 
 ## Available tools
 
@@ -50,7 +50,7 @@ If a section is empty, omit it from the email — don't write "0 expenses" fille
 Markdown plaintext. Recommended sections, in order:
 
 ```
-# LifeOS digest — week of <YYYY-MM-DD>
+# JazeOS digest — week of <YYYY-MM-DD>
 
 ## Money
 - This week's expenses: <total> across <n> rows. Top categories: ...
@@ -85,7 +85,7 @@ Drop sections that have nothing to report. Keep the whole thing under ~80 lines.
 
 Call `digest.send` with:
 - `week_starts_on` — the Monday computed in step 1.
-- `subject` — short, e.g. `"LifeOS week of 2026-05-04 — €X spent, Y bills due"`.
+- `subject` — short, e.g. `"JazeOS week of 2026-05-04 — €X spent, Y bills due"`.
 - `body_text` — the Markdown above.
 - `structured_summary` — a small JSON of headline numbers (e.g. `{ "expenses_total": 123.45, "renewals_count": 2, "bills_overdue": 0 }`). Optional but useful for future history views.
 - `body_html` — leave unset; the server's blade view renders the plaintext as a styled email.

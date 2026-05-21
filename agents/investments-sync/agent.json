@@ -2,7 +2,7 @@
     "slug": "investments-sync",
     "model": "claude-opus-4-7",
     "fallback_model": "claude-sonnet-4-6",
-    "mcp_servers": ["lifeos", "gmail", "drive"],
+    "mcp_servers": ["jazeos", "gmail", "drive"],
     "allowed_tools": [
         "investments.portfolio",
         "investments.recordTransaction",

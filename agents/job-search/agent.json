@@ -2,7 +2,7 @@
     "slug": "job-search",
     "model": "claude-opus-4-7",
     "fallback_model": "claude-sonnet-4-6",
-    "mcp_servers": ["lifeos", "gmail"],
+    "mcp_servers": ["jazeos", "gmail"],
     "allowed_tools": [
         "jobs.pipeline",
         "jobs.createApplication"

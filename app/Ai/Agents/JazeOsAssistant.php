@@ -47,7 +47,7 @@ use Laravel\Ai\Contracts\HasTools;
 use Laravel\Ai\Contracts\Tool;
 use Laravel\Ai\Promptable;
 
-final class LifeOsAssistant implements Agent, Conversational, HasTools
+final class JazeOsAssistant implements Agent, Conversational, HasTools
 {
     use Promptable, RemembersConversations;
 
@@ -72,7 +72,7 @@ final class LifeOsAssistant implements Agent, Conversational, HasTools
         $context = $this->contextService->loadForPage($this->user, $this->pageContext);
 
         return <<<PROMPT
-        You are LifeOS Assistant, a personal life management helper.
+        You are JazeOS Assistant, a personal life management helper.
 
         You can help the user with:
         - Creating and tracking expenses

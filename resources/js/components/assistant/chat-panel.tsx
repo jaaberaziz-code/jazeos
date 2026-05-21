@@ -190,7 +190,7 @@ export function ChatPanel() {
                     <div>
                         <SheetHeader className="p-0">
                             <SheetTitle className="text-lg font-semibold tracking-tight">
-                                LifeOS Assistant
+                                JazeOS Assistant
                             </SheetTitle>
                         </SheetHeader>
                         <p className="text-xs text-muted-foreground mt-0.5">

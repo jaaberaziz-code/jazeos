@@ -1,6 +1,6 @@
 name: Project bootstrap
 
-# Idempotently provisions LifeOS labels, GitHub Project v2, and migrates
+# Idempotently provisions JazeOS labels, GitHub Project v2, and migrates
 # existing issues onto the new state. Manually triggered.
 #
 # Required secrets:

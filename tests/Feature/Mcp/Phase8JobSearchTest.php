@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Mcp;
 
-use App\Mcp\LifeOsServer;
+use App\Mcp\JazeOsServer;
 use App\Mcp\Tools\Jobs\CreateApplication;
 use App\Models\AgentToken;
 use App\Models\JobApplication;
@@ -56,7 +56,7 @@ class Phase8JobSearchTest extends TestCase
 
     public function test_create_application_queues_pending_action(): void
     {
-        LifeOsServer::tool(CreateApplication::class, $this->jobArgs())
+        JazeOsServer::tool(CreateApplication::class, $this->jobArgs())
             ->assertOk()
             ->assertStructuredContent(function (AssertableJson $json) {
                 $json->where('status', PendingAction::STATUS_PENDING)->etc();
@@ -70,15 +70,15 @@ class Phase8JobSearchTest extends TestCase
     {
         $args = $this->jobArgs();
 
-        LifeOsServer::tool(CreateApplication::class, $args);
-        LifeOsServer::tool(CreateApplication::class, $args);
+        JazeOsServer::tool(CreateApplication::class, $args);
+        JazeOsServer::tool(CreateApplication::class, $args);
 
         $this->assertSame(1, PendingAction::query()->count());
     }
 
     public function test_apply_creates_job_application_with_discovered_status(): void
     {
-        LifeOsServer::tool(CreateApplication::class, $this->jobArgs());
+        JazeOsServer::tool(CreateApplication::class, $this->jobArgs());
 
         $action = PendingAction::query()->firstOrFail();
         app(PendingActionApplier::class)->apply($action, $this->user);
@@ -94,7 +94,7 @@ class Phase8JobSearchTest extends TestCase
 
     public function test_revert_deletes_created_application(): void
     {
-        LifeOsServer::tool(CreateApplication::class, $this->jobArgs());
+        JazeOsServer::tool(CreateApplication::class, $this->jobArgs());
 
         $action = PendingAction::query()->firstOrFail();
         $applied = app(PendingActionApplier::class)->apply($action, $this->user);
@@ -110,7 +110,7 @@ class Phase8JobSearchTest extends TestCase
         [$restricted] = AgentToken::issue($this->user, $this->tenant, 'restricted', ['jobs.pipeline']);
         App::instance('agent.token', $restricted);
 
-        LifeOsServer::tool(CreateApplication::class, $this->jobArgs())
+        JazeOsServer::tool(CreateApplication::class, $this->jobArgs())
             ->assertHasErrors(['Agent token is not authorized to call [jobs.createApplication].']);
     }
 
@@ -118,7 +118,7 @@ class Phase8JobSearchTest extends TestCase
     {
         // Server-side queueing is permissive; the FormRequest-style validator
         // in the applier rejects bad data when the human approves.
-        LifeOsServer::tool(CreateApplication::class, $this->jobArgs([
+        JazeOsServer::tool(CreateApplication::class, $this->jobArgs([
             'job_url' => 'not-a-url',
         ]));
 

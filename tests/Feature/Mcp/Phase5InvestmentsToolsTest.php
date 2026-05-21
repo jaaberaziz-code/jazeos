@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Mcp;
 
-use App\Mcp\LifeOsServer;
+use App\Mcp\JazeOsServer;
 use App\Mcp\Tools\Investments\BulkImportTransactions;
 use App\Mcp\Tools\Investments\RecordDividend;
 use App\Mcp\Tools\Investments\RecordTransaction;
@@ -53,7 +53,7 @@ class Phase5InvestmentsToolsTest extends TestCase
 
     public function test_record_transaction_queues_pending_action(): void
     {
-        LifeOsServer::tool(RecordTransaction::class, [
+        JazeOsServer::tool(RecordTransaction::class, [
             'investment_id' => $this->investment->id,
             'transaction_type' => 'buy',
             'quantity' => 5,
@@ -79,15 +79,15 @@ class Phase5InvestmentsToolsTest extends TestCase
             'order_id' => 'BRK-001',
         ];
 
-        LifeOsServer::tool(RecordTransaction::class, $args);
-        LifeOsServer::tool(RecordTransaction::class, $args);
+        JazeOsServer::tool(RecordTransaction::class, $args);
+        JazeOsServer::tool(RecordTransaction::class, $args);
 
         $this->assertSame(1, PendingAction::query()->count());
     }
 
     public function test_apply_record_transaction_writes_with_attribution(): void
     {
-        LifeOsServer::tool(RecordTransaction::class, [
+        JazeOsServer::tool(RecordTransaction::class, [
             'investment_id' => $this->investment->id,
             'transaction_type' => 'buy',
             'quantity' => 5,
@@ -109,7 +109,7 @@ class Phase5InvestmentsToolsTest extends TestCase
 
     public function test_record_dividend_queues_pending_action(): void
     {
-        LifeOsServer::tool(RecordDividend::class, [
+        JazeOsServer::tool(RecordDividend::class, [
             'investment_id' => $this->investment->id,
             'amount' => 12.50,
             'payment_date' => '2026-04-30',
@@ -122,7 +122,7 @@ class Phase5InvestmentsToolsTest extends TestCase
 
     public function test_reprice_lot_queues_pending_action(): void
     {
-        LifeOsServer::tool(RepriceLot::class, [
+        JazeOsServer::tool(RepriceLot::class, [
             'investment_id' => $this->investment->id,
             'current_value' => 115,
             'as_of' => '2026-05-07',
@@ -135,7 +135,7 @@ class Phase5InvestmentsToolsTest extends TestCase
 
     public function test_apply_reprice_lot_updates_current_value(): void
     {
-        LifeOsServer::tool(RepriceLot::class, [
+        JazeOsServer::tool(RepriceLot::class, [
             'investment_id' => $this->investment->id,
             'current_value' => 115,
             'as_of' => '2026-05-07',
@@ -151,7 +151,7 @@ class Phase5InvestmentsToolsTest extends TestCase
 
     public function test_revert_reprice_restores_previous_value(): void
     {
-        LifeOsServer::tool(RepriceLot::class, [
+        JazeOsServer::tool(RepriceLot::class, [
             'investment_id' => $this->investment->id,
             'current_value' => 115,
             'as_of' => '2026-05-07',
@@ -167,7 +167,7 @@ class Phase5InvestmentsToolsTest extends TestCase
 
     public function test_record_transaction_rejects_unknown_investment(): void
     {
-        LifeOsServer::tool(RecordTransaction::class, [
+        JazeOsServer::tool(RecordTransaction::class, [
             'investment_id' => 999999,
             'transaction_type' => 'buy',
             'quantity' => 1,
@@ -187,7 +187,7 @@ class Phase5InvestmentsToolsTest extends TestCase
 
         $this->actingAs($this->user);
 
-        LifeOsServer::tool(RecordTransaction::class, [
+        JazeOsServer::tool(RecordTransaction::class, [
             'investment_id' => $foreign->id,
             'transaction_type' => 'buy',
             'quantity' => 1,
@@ -200,7 +200,7 @@ class Phase5InvestmentsToolsTest extends TestCase
 
     public function test_bulk_import_queues_single_pending_action(): void
     {
-        LifeOsServer::tool(BulkImportTransactions::class, [
+        JazeOsServer::tool(BulkImportTransactions::class, [
             'items' => [
                 [
                     'investment_id' => $this->investment->id,

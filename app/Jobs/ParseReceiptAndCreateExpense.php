@@ -144,7 +144,7 @@ class ParseReceiptAndCreateExpense implements ShouldQueue
                 $gmailService->addLabel(
                     $this->gmailConnection,
                     $this->processedEmail->gmail_message_id,
-                    'LifeOS/Processed'
+                    'JazeOS/Processed'
                 );
 
                 // Fire event for notifications

@@ -2,7 +2,7 @@
     "slug": "cycle-menu-planner",
     "model": "claude-sonnet-4-6",
     "fallback_model": "claude-haiku-4-5-20251001",
-    "mcp_servers": ["lifeos"],
+    "mcp_servers": ["jazeos"],
     "allowed_tools": [
         "cycleMenu.currentWeek",
         "cycleMenu.shoppingList",

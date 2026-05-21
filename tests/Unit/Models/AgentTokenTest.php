@@ -22,7 +22,7 @@ class AgentTokenTest extends TestCase
 
         [$token, $plain] = AgentToken::issue($user, $tenant, 'test', ['*']);
 
-        $this->assertStringStartsWith('lifeos_agent_', $plain);
+        $this->assertStringStartsWith('jazeos_agent_', $plain);
         $this->assertNotEquals($plain, $token->token_hash);
         $this->assertSame(hash('sha256', $plain), $token->token_hash);
         $this->assertSame(['*'], $token->abilities);
@@ -44,7 +44,7 @@ class AgentTokenTest extends TestCase
 
     public function test_resolve_returns_null_for_unknown_token(): void
     {
-        $this->assertNull(AgentToken::resolve('lifeos_agent_garbage'));
+        $this->assertNull(AgentToken::resolve('jazeos_agent_garbage'));
     }
 
     public function test_resolve_skips_revoked_tokens(): void

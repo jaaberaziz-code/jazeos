@@ -1,9 +1,9 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "jaaberaziz-code/jazeos",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "JazeOS - AI-powered personal life management platform. Self-hosted, open source, with integrated AI agents and MCP support.",
+    "keywords": ["jazeos", "life-management", "laravel", "ai", "mcp", "self-hosted"],
     "license": "MIT",
     "require": {
         "php": "^8.5",

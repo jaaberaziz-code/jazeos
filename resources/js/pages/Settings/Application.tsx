@@ -153,7 +153,7 @@ export default function SettingsApplication() {
         <AppLayout>
             <Head title="Application Settings" />
 
-            <PageHeader title="Application Settings" description="Customize your LifeOS experience and interface preferences">
+            <PageHeader title="Application Settings" description="Customize your JazeOS experience and interface preferences">
                 <Button variant="outline" asChild>
                     <Link href="/settings">Back to Settings</Link>
                 </Button>

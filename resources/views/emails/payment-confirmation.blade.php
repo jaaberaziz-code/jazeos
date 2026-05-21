@@ -59,7 +59,7 @@
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" class="email-container" style="max-width: 540px; margin: 0 auto;">
                         <tr>
                             <td style="padding: 0 0 32px; text-align: center;">
-                                <span style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 700; color: #1B1B18; letter-spacing: -0.3px;" class="heading">LifeOS</span>
+                                <span style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 700; color: #1B1B18; letter-spacing: -0.3px;" class="heading">JazeOS</span>
                             </td>
                         </tr>
                     </table>
@@ -185,7 +185,7 @@
                                     <tr>
                                         <td style="text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 12px; line-height: 18px; color: #A1A09A;" class="footer-text-dark">
                                             <p style="margin: 0; color: #C4C4BE;" class="footer-muted-dark">
-                                                &copy; {{ date('Y') }} LifeOS
+                                                &copy; {{ date('Y') }} JazeOS
                                             </p>
                                         </td>
                                     </tr>

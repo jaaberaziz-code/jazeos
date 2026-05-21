@@ -11,7 +11,7 @@ use App\Models\UtilityBill;
 use App\Models\Warranty;
 use Illuminate\Database\Seeder;
 
-class LifeOSSeeder extends Seeder
+class JazeOSSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,7 +20,7 @@ class LifeOSSeeder extends Seeder
     {
         // Create a demo user if none exists
         $user = User::firstOrCreate(
-            ['email' => 'davor@lifeos.test'],
+            ['email' => 'davor@jazeos.test'],
             [
                 'name' => 'Davor Minchorov',
                 'email_verified_at' => now(),
@@ -48,7 +48,7 @@ class LifeOSSeeder extends Seeder
         // Create Utility Bills
         $this->createUtilityBills($user);
 
-        $this->command->info('LifeOS demo data seeded successfully!');
+        $this->command->info('JazeOS demo data seeded successfully!');
     }
 
     private function createSubscriptions(User $user): void

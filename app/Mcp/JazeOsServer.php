@@ -40,14 +40,14 @@ use App\Mcp\Tools\Warranties\CreateWarranty;
 use App\Mcp\Tools\Warranties\ListWarranties;
 use Laravel\Mcp\Server;
 
-class LifeOsServer extends Server
+class JazeOsServer extends Server
 {
-    protected string $name = 'LifeOS';
+    protected string $name = 'JazeOS';
 
     protected string $version = '0.1.0';
 
     protected string $instructions = <<<'MD'
-        LifeOS MCP server — read-only access to the authenticated tenant's data
+        JazeOS MCP server — read-only access to the authenticated tenant's data
         across Subscriptions, Contracts, Warranties, Investments, Expenses,
         Utility Bills, IOU/Debt, Job Applications, Cycle Menu, Notifications,
         and a dashboard summary. Every call is scoped to the (user, tenant)

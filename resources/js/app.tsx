@@ -7,7 +7,7 @@ import { Toaster } from 'sonner'
 import { LoadingIndicator } from './components/shared/loading-indicator'
 
 createInertiaApp({
-    title: (title) => title ? `${title} - LifeOS` : 'LifeOS',
+    title: (title) => title ? `${title} - JazeOS` : 'JazeOS',
     resolve: (name) => {
         const pages = import.meta.glob<{ default: React.ComponentType }>('./pages/**/*.tsx', { eager: true })
         return pages[`./pages/${name}.tsx`]

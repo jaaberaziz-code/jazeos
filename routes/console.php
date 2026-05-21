@@ -117,6 +117,6 @@ Schedule::command('agents:run cycle-menu-planner')
 Schedule::command('agents:run weekly-digest')
     ->cron('0 21 * * 0')
     ->name('agent-weekly-digest')
-    ->description('Compose and email a one-page summary of the user\'s LifeOS state for the week')
+    ->description('Compose and email a one-page summary of the user\'s JazeOS state for the week')
     ->withoutOverlapping(15)
     ->when(fn (): bool => (bool) config('agents.flags.agents.weekly_digest.enabled', false));

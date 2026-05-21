@@ -1,4 +1,4 @@
-# LifeOS GitHub project management — setup plan (Phase 0)
+# JazeOS GitHub project management — setup plan (Phase 0)
 
 This document is the Phase 0 deliverable for the GitHub project management
 setup work tracked on branch `claude/setup-github-project-DQvtF`.
@@ -112,7 +112,7 @@ Modules from `README.md` map cleanly to the labels you specified:
 | `module:notifications` | README "Notification System" |
 | `module:dashboard` | README "Unified Dashboard" |
 | `module:agents` | the Managed Agents work (per spec) |
-| `module:mcp` | the LifeOS MCP server (per spec) |
+| `module:mcp` | the JazeOS MCP server (per spec) |
 | `module:infra` | Docker/CI/tenancy/deploys (per spec) |
 
 ### Open questions on modules
@@ -174,7 +174,7 @@ distinguishability is provided by the label text itself.
 | `module:notifications` | Notification system |
 | `module:dashboard` | Unified dashboard |
 | `module:agents` | Managed Agents |
-| `module:mcp` | LifeOS MCP server |
+| `module:mcp` | JazeOS MCP server |
 | `module:infra` | Docker, CI, tenancy, deploys |
 | `module:invoicing` | (proposed; remove if you reject) |
 
@@ -245,7 +245,7 @@ Referenced from `CLAUDE.md` (will append a short section) and from
 
 ## 8. GitHub Project v2 — proposed
 
-Single Project named **"LifeOS"** linked to the repo.
+Single Project named **"JazeOS"** linked to the repo.
 
 ### Fields
 
@@ -293,7 +293,7 @@ Closed issues will not be touched.
 **Cannot be drafted without `docs/agents/CLAUDE_CODE_BRIEF.md`.** Once you
 provide that brief (option 4.i), I will:
 
-- Create one parent tracking issue "LifeOS Managed Agents implementation"
+- Create one parent tracking issue "JazeOS Managed Agents implementation"
   with `module:agents`, no `phase` label, Effort = XL.
 - Create 11 sub-issues (`phase:0`..`phase:10`), each using
   `agent-task.yml`, body = the phase summary from the brief, labels

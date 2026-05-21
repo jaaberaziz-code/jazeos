@@ -64,7 +64,7 @@ The agent must respect these without exception. They override every other heuris
 - Never auto-apply.
 - Never record a posting outside the active search window.
 - Never include the user's CV verbatim in any external system.
-- Never share salary expectations with anyone outside LifeOS.
+- Never share salary expectations with anyone outside JazeOS.
 
 ## Output preferences
 

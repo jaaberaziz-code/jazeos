@@ -1,4 +1,4 @@
-# LifeOS Managed Agents — Implementation Plan
+# JazeOS Managed Agents — Implementation Plan
 
 > **Status:** Approved 2026-05-06. Canonical location for the plan; further phases update this file in place. Branch: `claude/implement-managed-agents-L1MeH` with one child branch + PR per phase.
 >
@@ -10,7 +10,7 @@
 > - Phase 4 — email-ingestion expansion (Subscriptions, Contracts, Warranties, IOU, Utility Bills, Job status updates + interviews): PR #155.
 > - Phase 5 — investments-sync agent (record transactions, dividends, mark-to-market, bulk-import statements): PR #156. Broker-agnostic; reads from Gmail (broker confirms) + Drive (statements).
 > - Phase 6 — bank/card statement processor with reconciliation against existing expenses: PR #157. Introduces a `bank_lines` table, a deterministic matcher (amount + date + merchant fuzzy), and `bank.recordLines` / `bank.linkExpense` / `bank.unmatched` MCP tools.
-> - Phase 7 — receipts/documents OCR agent: PR #158. Adds `source_file_id` (with backward-compatible idempotency keys) to `expenses.create`, `warranties.create`, `utilityBills.create`; new `receipts.processed` read tool to skip already-OCR'd Drive files. Vision via the user's Drive MCP — no new LifeOS infrastructure.
+> - Phase 7 — receipts/documents OCR agent: PR #158. Adds `source_file_id` (with backward-compatible idempotency keys) to `expenses.create`, `warranties.create`, `utilityBills.create`; new `receipts.processed` read tool to skip already-OCR'd Drive files. Vision via the user's Drive MCP — no new JazeOS infrastructure.
 > - Phase 8 — job-search hunter agent: in PR. Gated by `agents.job_search.enabled` AND a per-skill active-search window. New `jobs.createApplication` MCP tool + starter `cv` and `job-criteria` skills (placeholder content the user replaces).
 > - Phase 9 — cycle-menu planner agent: in PR. New `cycleMenu.addItem`, `cycleMenu.setWeek`, `cycleMenu.shoppingList` tools. The agent fills empty days only (never overwrites the user's plan) and produces a structured shopping list aggregation for the next 7 days.
 > - Phase 10 — weekly digest agent: in PR. New `digest.send` MCP tool, `digest_logs` table, `WeeklyDigestMail` Mailable. The agent reads across all modules (read-only) and composes a one-page Sunday-night summary; on approval the email is sent. Auto-apply gate is relaxed for `digest.send` so weekly auto-send works after one manual approval.
@@ -19,7 +19,7 @@
 
 ## Context
 
-LifeOS is a Laravel 12 + React 19/Inertia v3 personal-life management app with 11 active modules (Subscriptions, Contracts, Warranties, Investments, Expenses, Utility Bills, IOU/Debt, Budgets, Job Applications, Cycle Menu, Notifications) plus the recently delivered Invoicing module. Multi-tenancy is row-level via a `tenant_id` column and `BelongsToTenant`/`TenantScope`; conversion is complete for the 34 covered models.
+JazeOS is a Laravel 12 + React 19/Inertia v3 personal-life management app with 11 active modules (Subscriptions, Contracts, Warranties, Investments, Expenses, Utility Bills, IOU/Debt, Budgets, Job Applications, Cycle Menu, Notifications) plus the recently delivered Invoicing module. Multi-tenancy is row-level via a `tenant_id` column and `BelongsToTenant`/`TenantScope`; conversion is complete for the 34 covered models.
 
 Today the app already has substantial AI scaffolding:
 
@@ -32,7 +32,7 @@ Today the app already has substantial AI scaffolding:
 
 What's missing, and why this initiative exists:
 
-- LifeOS data is still populated and maintained by hand. The user wants autonomous agents (Anthropic Managed Agents, beta header `managed-agents-2026-04-01`) to ingest from Gmail, Drive, broker portals, statements, and job boards and to write back to LifeOS modules through a tenant-safe, auditable, reversible interface.
+- JazeOS data is still populated and maintained by hand. The user wants autonomous agents (Anthropic Managed Agents, beta header `managed-agents-2026-04-01`) to ingest from Gmail, Drive, broker portals, statements, and job boards and to write back to JazeOS modules through a tenant-safe, auditable, reversible interface.
 - The current AI tools are coupled to `laravel/ai`'s in-process `Agent` interface; they can't be invoked by an external Managed Agents runtime.
 - There is no Pending Actions queue, no agent run log, no per-tenant API token model, and no pattern for idempotent agent writes that respect FormRequest validation and domain events.
 - Most modules outside Invoicing skip the service layer; controllers write directly through Eloquent. MCP write tools must call services to keep validation, policy, and event semantics consistent — so a small extraction effort precedes write tooling.
@@ -74,7 +74,7 @@ Every write tool defaults to creating a `pending_action` rather than mutating da
 ### 5. Orchestration: Laravel scheduler dispatches `agents:run` artisan commands
 
 - Reuse the existing scheduler. Each agent has a `Schedule::command('agents:run {slug}')->cron(...)` entry behind a feature flag.
-- The `agents:run` command (Phase 3) creates a Managed Agents session via the official Anthropic PHP SDK (`anthropic/anthropic-sdk-php`), passes the LifeOS MCP server URL and the agent's tool allowlist, streams events into an `agent_runs` table, and exits when the session terminates.
+- The `agents:run` command (Phase 3) creates a Managed Agents session via the official Anthropic PHP SDK (`anthropic/anthropic-sdk-php`), passes the JazeOS MCP server URL and the agent's tool allowlist, streams events into an `agent_runs` table, and exits when the session terminates.
 - **Reject** external cron hitting the Managed Agents API directly: duplicates scheduling logic and loses the ability to gate runs behind a tenancy/feature-flag check.
 
 ### 6. Anthropic client: official `anthropic/anthropic-sdk-php` + HTTP fallback inside `ManagedAgentsClient`
@@ -123,7 +123,7 @@ agents/
   ...
 app/
   Mcp/
-    Server.php              # registered with Mcp::web('/mcp/lifeos', ...)
+    Server.php              # registered with Mcp::web('/mcp/jazeos', ...)
     Middleware/
       ResolveAgentTenant.php
     Tools/
@@ -224,7 +224,7 @@ Schema::create('pending_actions', function (Blueprint $t) {
 
 ## Multi-tenant resolution for inbound MCP requests
 
-1. Anthropic Managed Agents calls `POST https://lifeos.example.com/mcp/lifeos` with `Authorization: Bearer <agent_token>`.
+1. Anthropic Managed Agents calls `POST https://jazeos.example.com/mcp/jazeos` with `Authorization: Bearer <agent_token>`.
 2. `auth.agent` middleware:
    - Hashes the bearer, looks up `agent_tokens.token_hash`, asserts not revoked/expired.
    - Loads `User` and forces `current_tenant_id = agent_token.tenant_id`. Calls `Auth::setUser($user)` for the request lifetime.
@@ -291,10 +291,10 @@ Deliverables:
 
 - Promote `laravel/mcp` to a direct dependency.
 - Create `agent_tokens` table + `AgentToken` model + `auth.agent` middleware + `php artisan agents:tokens:issue {user} {tenant} --abilities=...` command.
-- Register the LifeOS MCP server in `routes/ai.php` under `/mcp/lifeos`, guarded by `auth.agent`.
+- Register the JazeOS MCP server in `routes/ai.php` under `/mcp/jazeos`, guarded by `auth.agent`.
 - Implement all 11 read tools above. Each calls existing query paths (controllers' index logic extracted to lightweight read services / `*Reader` classes — small extraction, no event coverage required).
 - Document tool schemas in `docs/agents/MCP_TOOLS.md`.
-- Add `.mcp.json` entry pointing at the local URL so Claude Code can call the LifeOS MCP locally during dev.
+- Add `.mcp.json` entry pointing at the local URL so Claude Code can call the JazeOS MCP locally during dev.
 - Tests (PHPUnit feature tests):
   - Token rejection (missing/expired/revoked) → 401.
   - Cross-tenant token cannot read another tenant's data.
@@ -320,7 +320,7 @@ Deliverables:
 
 ### Phase 3 — Email ingestion agent (Expenses only)
 
-- Define `agents/email-ingestion/agent.json`: model `claude-opus-4-7` (with sonnet fallback config), MCP allowlist = Gmail MCP + LifeOS MCP `expenses.*`, max_session_duration 10 min, max_tool_calls 200, feature flag `agents.email_ingestion.enabled`.
+- Define `agents/email-ingestion/agent.json`: model `claude-opus-4-7` (with sonnet fallback config), MCP allowlist = Gmail MCP + JazeOS MCP `expenses.*`, max_session_duration 10 min, max_tool_calls 200, feature flag `agents.email_ingestion.enabled`.
 - `agents/email-ingestion/system.md`: instructions to read recent receipt-shaped emails, extract one expense per email, dedupe via idempotency key, create pending actions only (no auto-apply allowed in Phase 3).
 - Skill `.claude/skills/expense-categorization/SKILL.md` — **content blocks on user input; this is an open question below**.
 - `agent_runs` + `agent_run_events` migrations.
@@ -396,7 +396,7 @@ End-to-end check after Phase 1:
 
 1. `composer install && php artisan migrate` cleanly applies new migrations.
 2. `php artisan agents:tokens:issue user@example.com tenant-slug --abilities=read:*` prints a token.
-3. Add the LifeOS MCP entry to `.mcp.json` (URL + token header).
+3. Add the JazeOS MCP entry to `.mcp.json` (URL + token header).
 4. From Claude Code, run `/mcp` then call `dashboard.summary`, `expenses.list`, `subscriptions.list` — assert structured JSON.
 5. Issue a second token bound to a different tenant; confirm cross-tenant data does not leak.
 6. `php artisan test --compact tests/Feature/Mcp` is green.

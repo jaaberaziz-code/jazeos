@@ -134,7 +134,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
             <div className="flex h-16 items-center justify-between border-b border-border px-4">
                 {!collapsed && (
                     <Link href="/dashboard" className="text-xl font-semibold text-sidebar-foreground">
-                        LifeOS
+                        JazeOS
                     </Link>
                 )}
                 <Button

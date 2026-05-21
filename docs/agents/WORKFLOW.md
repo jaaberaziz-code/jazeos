@@ -1,4 +1,4 @@
-# LifeOS agent workflow
+# JazeOS agent workflow
 
 How work moves from idea to merged code in this repo. Optimized for
 single-maintainer + autonomous agent (Claude / Junie) collaboration.
@@ -84,7 +84,7 @@ or by you, manually.
 
 ## Project board views
 
-The board is at the GitHub Project named **LifeOS** (linked to this
+The board is at the GitHub Project named **JazeOS** (linked to this
 repo). Five views, picked by what you're doing:
 
 - **Board** — your default landing view. Kanban grouped by Status,

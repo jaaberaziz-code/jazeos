@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Mcp;
 
-use App\Mcp\LifeOsServer;
+use App\Mcp\JazeOsServer;
 use App\Mcp\Tools\Bank\LinkExpense as BankLinkExpense;
 use App\Mcp\Tools\Bank\RecordLines as BankRecordLines;
 use App\Mcp\Tools\Bank\UnmatchedLines as BankUnmatchedLines;
@@ -53,7 +53,7 @@ class Phase6BankToolsTest extends TestCase
 
     public function test_record_lines_queues_pending_action(): void
     {
-        LifeOsServer::tool(BankRecordLines::class, [
+        JazeOsServer::tool(BankRecordLines::class, [
             'lines' => [$this->lineArgs()],
         ])->assertOk()->assertStructuredContent(function (AssertableJson $json) {
             $json->where('status', PendingAction::STATUS_PENDING)
@@ -69,8 +69,8 @@ class Phase6BankToolsTest extends TestCase
     {
         $args = ['lines' => [$this->lineArgs()]];
 
-        LifeOsServer::tool(BankRecordLines::class, $args);
-        LifeOsServer::tool(BankRecordLines::class, $args);
+        JazeOsServer::tool(BankRecordLines::class, $args);
+        JazeOsServer::tool(BankRecordLines::class, $args);
 
         $this->assertSame(1, PendingAction::query()->where('tool', 'bank.recordLines')->count());
     }
@@ -85,7 +85,7 @@ class Phase6BankToolsTest extends TestCase
             'expense_date' => '2026-05-01',
         ]);
 
-        LifeOsServer::tool(BankRecordLines::class, [
+        JazeOsServer::tool(BankRecordLines::class, [
             'lines' => [
                 $this->lineArgs(),
                 $this->lineArgs([
@@ -147,7 +147,7 @@ class Phase6BankToolsTest extends TestCase
             'fingerprint' => hash('sha256', 'matched-1'),
         ]);
 
-        LifeOsServer::tool(BankUnmatchedLines::class, ['within_days' => 7])
+        JazeOsServer::tool(BankUnmatchedLines::class, ['within_days' => 7])
             ->assertOk()
             ->assertStructuredContent(function (AssertableJson $json) {
                 $json->where('count', 1)
@@ -172,7 +172,7 @@ class Phase6BankToolsTest extends TestCase
             'fingerprint' => hash('sha256', 'unmatched-link'),
         ]);
 
-        LifeOsServer::tool(BankLinkExpense::class, [
+        JazeOsServer::tool(BankLinkExpense::class, [
             'bank_line_id' => $bankLine->id,
             'expense_id' => $expense->id,
         ])->assertOk();
@@ -189,7 +189,7 @@ class Phase6BankToolsTest extends TestCase
 
     public function test_revert_record_lines_removes_created_bank_lines(): void
     {
-        LifeOsServer::tool(BankRecordLines::class, [
+        JazeOsServer::tool(BankRecordLines::class, [
             'lines' => [$this->lineArgs()],
         ]);
 
@@ -204,7 +204,7 @@ class Phase6BankToolsTest extends TestCase
 
     public function test_link_expense_rejects_unknown_targets(): void
     {
-        LifeOsServer::tool(BankLinkExpense::class, [
+        JazeOsServer::tool(BankLinkExpense::class, [
             'bank_line_id' => 999,
             'expense_id' => 999,
         ])->assertHasErrors(['Bank line [999] not found in this tenant.']);
@@ -225,7 +225,7 @@ class Phase6BankToolsTest extends TestCase
 
         $this->actingAs($this->user);
 
-        LifeOsServer::tool(BankLinkExpense::class, [
+        JazeOsServer::tool(BankLinkExpense::class, [
             'bank_line_id' => $foreignBankLine->id,
             'expense_id' => $foreignExpense->id,
         ])->assertHasErrors([

@@ -4,9 +4,9 @@ services:
     - "80:80"
     - "443:443"
     networks:
-      lifeos:
+      jazeos:
         aliases:
-          - lifeos.test
+          - jazeos.test
     volumes:
       # Mount the Docker socket as read-only so Traefik can listen to events
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -23,7 +23,7 @@ services:
     volumes:
       - .:/var/www/html/
     networks:
-      - lifeos
+      - jazeos
     depends_on:
       traefik:
         condition: service_started
@@ -31,7 +31,7 @@ services:
         condition: service_healthy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.laravel.rule=HostRegexp(`lifeos.test`)"
+      - "traefik.http.routers.laravel.rule=HostRegexp(`jazeos.test`)"
       - "traefik.http.routers.laravel.entrypoints=web"
       - "traefik.http.services.laravel.loadbalancer.server.port=8080"
       - "traefik.http.services.laravel.loadbalancer.server.scheme=http"
@@ -42,25 +42,25 @@ services:
       - .:/usr/src/app/
     working_dir: /usr/src/app/
     networks:
-      - lifeos
+      - jazeos
 
   mailpit:
       image: axllent/mailpit
       networks:
-        - lifeos
+        - jazeos
       ports:
         - "8025:8025"
 
   mysql:
     networks:
-      - lifeos
+      - jazeos
     volumes:
       - mysql_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
-      MYSQL_DATABASE: ${DB_DATABASE:-lifeos}
-      MYSQL_USER: ${DB_USERNAME:-lifeos}
-      MYSQL_PASSWORD: ${DB_PASSWORD:-lifeos}
+      MYSQL_DATABASE: ${DB_DATABASE:-jazeos}
+      MYSQL_USER: ${DB_USERNAME:-jazeos}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-jazeos}
     ports:
       - "3306:3306"
     healthcheck:
@@ -76,7 +76,7 @@ services:
     ports:
       - "6379:6379"
     networks:
-      - lifeos
+      - jazeos
 
 
   minio:
@@ -84,12 +84,12 @@ services:
       - '${FORWARD_MINIO_PORT:-9000}:9000'
       - '${FORWARD_MINIO_CONSOLE_PORT:-8900}:8900'
     environment:
-      MINIO_ROOT_USER: ${MINIO_ROOT_USERNAME:-lifeos}
-      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-lifeos}
+      MINIO_ROOT_USER: ${MINIO_ROOT_USERNAME:-jazeos}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-jazeos}
     volumes:
       - minio_data:/data/minio
     networks:
-      - lifeos
+      - jazeos
     command: 'minio server /data/minio --console-address ":8900"'
 
   queue:
@@ -101,7 +101,7 @@ services:
     volumes:
       - .:/var/www/html/
     networks:
-      - lifeos
+      - jazeos
     depends_on:
       mysql:
         condition: service_healthy
@@ -116,14 +116,14 @@ services:
     volumes:
       - .:/var/www/html/
     networks:
-      - lifeos
+      - jazeos
     depends_on:
       mysql:
         condition: service_healthy
     command: "php artisan schedule:work"
 
 networks:
-  lifeos:
+  jazeos:
 
 volumes:
   mysql_data:

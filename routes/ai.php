@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Mcp\LifeOsServer;
+use App\Mcp\JazeOsServer;
 use Laravel\Mcp\Facades\Mcp;
 
-Mcp::web('/mcp/lifeos', LifeOsServer::class)
+Mcp::web('/mcp/jazeos', JazeOsServer::class)
     ->middleware('auth.agent')
-    ->name('mcp.lifeos');
+    ->name('mcp.jazeos');

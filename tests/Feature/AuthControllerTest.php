@@ -32,7 +32,7 @@ class AuthControllerTest extends TestCase
         ]);
 
         $response->assertRedirect(route('dashboard'));
-        $response->assertSessionHas('success', 'Welcome back to LifeOS!');
+        $response->assertSessionHas('success', 'Welcome back to JazeOS!');
         $this->assertAuthenticatedAs($user);
     }
 

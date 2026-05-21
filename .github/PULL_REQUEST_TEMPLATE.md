@@ -2,7 +2,7 @@
 
 ## Summary
 
-This PR implements a complete invoicing and billing system for LifeOS, providing comprehensive functionality for customer management, invoice creation, payment tracking, credit notes, and financial analytics.
+This PR implements a complete invoicing and billing system for JazeOS, providing comprehensive functionality for customer management, invoice creation, payment tracking, credit notes, and financial analytics.
 
 ## Implementation Phases
 
@@ -328,7 +328,7 @@ None - This is a new module with no existing dependencies.
 1. Run migrations: `php artisan migrate`
 2. No seed data required (users create their own data)
 3. No configuration changes needed (uses defaults)
-4. Compatible with existing LifeOS modules
+4. Compatible with existing JazeOS modules
 
 ## Documentation
 

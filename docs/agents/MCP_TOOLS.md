@@ -1,6 +1,6 @@
-# LifeOS MCP — Tool Reference
+# JazeOS MCP — Tool Reference
 
-The LifeOS MCP server is registered at `/mcp/lifeos` (Streamable HTTP, JSON-RPC 2.0) and guarded by the `auth.agent` middleware. Every request must include `Authorization: Bearer <agent_token>`. The bound `(user, tenant)` pair is resolved from the token; all reads are filtered by the existing `BelongsToTenant` global scope using that tenant.
+The JazeOS MCP server is registered at `/mcp/jazeos` (Streamable HTTP, JSON-RPC 2.0) and guarded by the `auth.agent` middleware. Every request must include `Authorization: Bearer <agent_token>`. The bound `(user, tenant)` pair is resolved from the token; all reads are filtered by the existing `BelongsToTenant` global scope using that tenant.
 
 Phase 1 ships read-only tools. Each tool returns structured JSON via `Response::structured(...)`; the same content is also serialized as text content for clients that don't render structured output.
 
@@ -13,7 +13,7 @@ php artisan agents:tokens:issue user@example.com tenant-slug \
     --expires="+30 days"
 ```
 
-Print is one-shot. The plaintext token shown is `lifeos_agent_<48-char-random>`. The server stores only the SHA-256 hash.
+Print is one-shot. The plaintext token shown is `jazeos_agent_<48-char-random>`. The server stores only the SHA-256 hash.
 
 ## Abilities
 
@@ -570,7 +570,7 @@ Returns `{ menu, window_days, item_count, items[] }` where each item is `{ title
 
 ## Weekly digest (Phase 10)
 
-Phase 10 ships the weekly-digest agent. The agent itself is read-only across LifeOS data; the only write tool it uses is `digest.send`, which queues the email body. On apply, the email is dispatched via Laravel Mail and a row is recorded in `digest_logs`.
+Phase 10 ships the weekly-digest agent. The agent itself is read-only across JazeOS data; the only write tool it uses is `digest.send`, which queues the email body. On apply, the email is dispatched via Laravel Mail and a row is recorded in `digest_logs`.
 
 ### `digest.send` (write)
 

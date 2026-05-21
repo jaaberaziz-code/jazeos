@@ -31,7 +31,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             return redirect()->intended(route('dashboard'))
-                ->with('success', 'Welcome back to LifeOS!');
+                ->with('success', 'Welcome back to JazeOS!');
         }
 
         return back()->withErrors([

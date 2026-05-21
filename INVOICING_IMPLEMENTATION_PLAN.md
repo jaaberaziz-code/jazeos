@@ -25,7 +25,7 @@
 
 ## Overview
 
-The invoicing module will enable LifeOS to:
+The invoicing module will enable JazeOS to:
 - Create and manage invoices for one-time and recurring billing
 - Support multiple currencies with conversion
 - Handle taxes (VAT/GST/sales tax), discounts, and credit notes
@@ -35,7 +35,7 @@ The invoicing module will enable LifeOS to:
 - Track refunds and credit note applications
 
 **Key Design Principles:**
-- Follow existing LifeOS patterns (RESTful controllers, Form Requests, Blade components)
+- Follow existing JazeOS patterns (RESTful controllers, Form Requests, Blade components)
 - Leverage existing CurrencyService for multi-currency support
 - Use decimal(10,2) for monetary fields (store in cents where needed)
 - Maintain user isolation via `user_id` foreign keys
@@ -45,7 +45,7 @@ The invoicing module will enable LifeOS to:
 
 ## Architecture Alignment
 
-### Existing LifeOS Patterns to Follow
+### Existing JazeOS Patterns to Follow
 
 | Pattern | Example Reference | Application to Invoicing |
 |---------|-------------------|-------------------------|

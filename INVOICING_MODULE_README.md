@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Invoicing Module is a comprehensive invoicing and billing system integrated into LifeOS. It provides complete functionality for managing customers, creating invoices, recording payments, issuing credit notes, and analyzing financial data.
+The Invoicing Module is a comprehensive invoicing and billing system integrated into JazeOS. It provides complete functionality for managing customers, creating invoices, recording payments, issuing credit notes, and analyzing financial data.
 
 ## Features
 
@@ -555,8 +555,8 @@ The invoicing module uses these tables:
 
 ## License
 
-This module is part of LifeOS and follows the same license terms.
+This module is part of JazeOS and follows the same license terms.
 
 ## Credits
 
-Developed for LifeOS personal life management platform.
+Developed for JazeOS personal life management platform.

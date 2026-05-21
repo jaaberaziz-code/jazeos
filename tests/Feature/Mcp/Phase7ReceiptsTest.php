@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Mcp;
 
-use App\Mcp\LifeOsServer;
+use App\Mcp\JazeOsServer;
 use App\Mcp\Tools\Expenses\CreateExpense;
 use App\Mcp\Tools\Receipts\ProcessedFiles;
 use App\Models\AgentToken;
@@ -45,8 +45,8 @@ class Phase7ReceiptsTest extends TestCase
             'source_file_id' => 'drive-receipt-001',
         ];
 
-        LifeOsServer::tool(CreateExpense::class, $args);
-        LifeOsServer::tool(CreateExpense::class, $args);
+        JazeOsServer::tool(CreateExpense::class, $args);
+        JazeOsServer::tool(CreateExpense::class, $args);
 
         $this->assertSame(1, PendingAction::query()->where('tool', 'expenses.create')->count());
         $this->assertSame('drive-receipt-001', PendingAction::query()->first()->payload['source_file_id']);
@@ -63,8 +63,8 @@ class Phase7ReceiptsTest extends TestCase
             'description' => 'Groceries',
         ];
 
-        LifeOsServer::tool(CreateExpense::class, [...$base, 'source_file_id' => 'drive-001']);
-        LifeOsServer::tool(CreateExpense::class, [...$base, 'source_file_id' => 'drive-002']);
+        JazeOsServer::tool(CreateExpense::class, [...$base, 'source_file_id' => 'drive-001']);
+        JazeOsServer::tool(CreateExpense::class, [...$base, 'source_file_id' => 'drive-002']);
 
         $this->assertSame(2, PendingAction::query()->where('tool', 'expenses.create')->count());
     }
@@ -80,12 +80,12 @@ class Phase7ReceiptsTest extends TestCase
             'description' => 'Groceries',
         ];
 
-        LifeOsServer::tool(CreateExpense::class, [...$base, 'source_file_id' => 'drive-001']);
-        LifeOsServer::tool(CreateExpense::class, [...$base, 'merchant' => 'Konzum', 'source_file_id' => 'drive-002']);
+        JazeOsServer::tool(CreateExpense::class, [...$base, 'source_file_id' => 'drive-001']);
+        JazeOsServer::tool(CreateExpense::class, [...$base, 'merchant' => 'Konzum', 'source_file_id' => 'drive-002']);
         // A submission without a file_id should be ignored by the listing.
-        LifeOsServer::tool(CreateExpense::class, [...$base, 'merchant' => 'Tinex']);
+        JazeOsServer::tool(CreateExpense::class, [...$base, 'merchant' => 'Tinex']);
 
-        LifeOsServer::tool(ProcessedFiles::class)
+        JazeOsServer::tool(ProcessedFiles::class)
             ->assertOk()
             ->assertStructuredContent(function (AssertableJson $json) {
                 $json->where('count', 2)
@@ -109,7 +109,7 @@ class Phase7ReceiptsTest extends TestCase
 
         $this->actingAs($other);
         App::instance('agent.token', $otherToken);
-        LifeOsServer::tool(CreateExpense::class, [
+        JazeOsServer::tool(CreateExpense::class, [
             'amount' => 99,
             'currency' => 'EUR',
             'expense_date' => '2026-05-01',
@@ -124,7 +124,7 @@ class Phase7ReceiptsTest extends TestCase
         [$token] = AgentToken::issue($this->user, $this->tenant, 'primary', ['*']);
         App::instance('agent.token', $token);
 
-        LifeOsServer::tool(ProcessedFiles::class)
+        JazeOsServer::tool(ProcessedFiles::class)
             ->assertOk()
             ->assertStructuredContent(function (AssertableJson $json) {
                 $json->where('count', 0)->etc();
@@ -156,7 +156,7 @@ class Phase7ReceiptsTest extends TestCase
             ],
         ]);
 
-        LifeOsServer::tool(ProcessedFiles::class)
+        JazeOsServer::tool(ProcessedFiles::class)
             ->assertOk()
             ->assertStructuredContent(function (AssertableJson $json) {
                 $json->where('count', 1)

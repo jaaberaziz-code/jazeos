@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Mcp;
 
 use App\Enums\MealType;
-use App\Mcp\LifeOsServer;
+use App\Mcp\JazeOsServer;
 use App\Mcp\Tools\CycleMenu\AddItem as AddCycleMenuItem;
 use App\Mcp\Tools\CycleMenu\SetWeek as SetCycleMenuWeek;
 use App\Mcp\Tools\CycleMenu\ShoppingList as CycleMenuShoppingList;
@@ -50,7 +50,7 @@ class Phase9CycleMenuToolsTest extends TestCase
 
     public function test_add_item_queues_pending_action(): void
     {
-        LifeOsServer::tool(AddCycleMenuItem::class, [
+        JazeOsServer::tool(AddCycleMenuItem::class, [
             'cycle_menu_id' => $this->menu->id,
             'day_index' => 2,
             'title' => 'Pasta Bolognese',
@@ -70,15 +70,15 @@ class Phase9CycleMenuToolsTest extends TestCase
             'meal_type' => 'dinner',
         ];
 
-        LifeOsServer::tool(AddCycleMenuItem::class, $args);
-        LifeOsServer::tool(AddCycleMenuItem::class, $args);
+        JazeOsServer::tool(AddCycleMenuItem::class, $args);
+        JazeOsServer::tool(AddCycleMenuItem::class, $args);
 
         $this->assertSame(1, PendingAction::query()->count());
     }
 
     public function test_apply_add_item_creates_day_if_missing(): void
     {
-        LifeOsServer::tool(AddCycleMenuItem::class, [
+        JazeOsServer::tool(AddCycleMenuItem::class, [
             'cycle_menu_id' => $this->menu->id,
             'day_index' => 2,
             'title' => 'Pasta',
@@ -96,7 +96,7 @@ class Phase9CycleMenuToolsTest extends TestCase
 
     public function test_add_item_rejects_out_of_range_day(): void
     {
-        LifeOsServer::tool(AddCycleMenuItem::class, [
+        JazeOsServer::tool(AddCycleMenuItem::class, [
             'cycle_menu_id' => $this->menu->id,
             'day_index' => 99,
             'title' => 'Bad',
@@ -122,7 +122,7 @@ class Phase9CycleMenuToolsTest extends TestCase
         ]);
         $this->assertSame(1, CycleMenuItem::query()->count());
 
-        LifeOsServer::tool(SetCycleMenuWeek::class, [
+        JazeOsServer::tool(SetCycleMenuWeek::class, [
             'cycle_menu_id' => $this->menu->id,
             'items_by_day_index' => [
                 0 => [
@@ -159,7 +159,7 @@ class Phase9CycleMenuToolsTest extends TestCase
             'position' => 0,
         ]);
 
-        LifeOsServer::tool(SetCycleMenuWeek::class, [
+        JazeOsServer::tool(SetCycleMenuWeek::class, [
             'cycle_menu_id' => $this->menu->id,
             'items_by_day_index' => [
                 0 => [
@@ -207,7 +207,7 @@ class Phase9CycleMenuToolsTest extends TestCase
             'meal_type' => MealType::Lunch,
         ]);
 
-        LifeOsServer::tool(CycleMenuShoppingList::class, ['window_days' => 7])
+        JazeOsServer::tool(CycleMenuShoppingList::class, ['window_days' => 7])
             ->assertOk()
             ->assertStructuredContent(function (AssertableJson $json): void {
                 $json->where('items', function ($items): bool {

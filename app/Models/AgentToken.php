@@ -63,7 +63,7 @@ class AgentToken extends Model
         ?string $agentSlug = null,
         ?Carbon $expiresAt = null,
     ): array {
-        $plain = 'lifeos_agent_'.Str::random(48);
+        $plain = 'jazeos_agent_'.Str::random(48);
 
         $token = static::create([
             'user_id' => $user->id,

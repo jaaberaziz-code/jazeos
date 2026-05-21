@@ -23,7 +23,7 @@ class UpdateJobStatus extends AbstractTool
     {
         return [
             'job_application_id' => $schema->integer()->description('Job application id (must belong to the authenticated tenant). Required.'),
-            'status' => $schema->string()->description('New status (one of the pipeline statuses LifeOS uses). Required.'),
+            'status' => $schema->string()->description('New status (one of the pipeline statuses JazeOS uses). Required.'),
             'next_action_at' => $schema->string()->description('ISO 8601 datetime to follow up.'),
             'source_email_id' => $schema->string()->description('Optional Gmail message id for idempotency.'),
         ];

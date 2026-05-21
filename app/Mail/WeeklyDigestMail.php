@@ -33,7 +33,7 @@ class WeeklyDigestMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "LifeOS weekly digest — week of {$this->weekStartsOn}",
+            subject: "JazeOS weekly digest — week of {$this->weekStartsOn}",
         );
     }
 

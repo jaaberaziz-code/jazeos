@@ -42,7 +42,7 @@ class AgentRegistryTest extends TestCase
         $this->writeAgent('email-ingestion', [
             'slug' => 'email-ingestion',
             'model' => 'claude-opus-4-7',
-            'mcp_servers' => ['lifeos', 'gmail'],
+            'mcp_servers' => ['jazeos', 'gmail'],
             'allowed_tools' => ['expenses.create'],
             'feature_flag' => 'agents.email_ingestion.enabled',
             'max_session_duration_seconds' => 600,
@@ -54,7 +54,7 @@ class AgentRegistryTest extends TestCase
 
         $this->assertSame('email-ingestion', $def->slug);
         $this->assertSame('claude-opus-4-7', $def->model);
-        $this->assertSame(['lifeos', 'gmail'], $def->mcpServers);
+        $this->assertSame(['jazeos', 'gmail'], $def->mcpServers);
         $this->assertSame(['expenses.create'], $def->allowedTools);
         $this->assertSame('## test prompt', $def->systemPrompt);
     }

@@ -41,7 +41,7 @@
 </head>
 <body style="margin: 0; padding: 0; background-color: #F5F4F0;">
     <div class="preheader" style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all;">
-        Invoice {{ $invoice->number ?? 'Draft' }} from LifeOS
+        Invoice {{ $invoice->number ?? 'Draft' }} from JazeOS
         &#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;
     </div>
 
@@ -58,7 +58,7 @@
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" class="email-container" style="max-width: 540px; margin: 0 auto;">
                         <tr>
                             <td style="padding: 0 0 32px; text-align: center;">
-                                <span style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 700; color: #1B1B18; letter-spacing: -0.3px;" class="heading">LifeOS</span>
+                                <span style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 700; color: #1B1B18; letter-spacing: -0.3px;" class="heading">JazeOS</span>
                             </td>
                         </tr>
                     </table>
@@ -170,7 +170,7 @@
                                                 Questions about this invoice? Contact us.
                                             </p>
                                             <p style="margin: 0; color: #C4C4BE;" class="footer-muted-dark">
-                                                &copy; {{ date('Y') }} LifeOS
+                                                &copy; {{ date('Y') }} JazeOS
                                             </p>
                                         </td>
                                     </tr>

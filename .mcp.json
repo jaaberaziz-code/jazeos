@@ -7,15 +7,11 @@
                 "boost:mcp"
             ]
         },
-        "nightwatch": {
+        "jazeos": {
             "type": "http",
-            "url": "https://nightwatch.laravel.com/mcp"
-        },
-        "lifeos": {
-            "type": "http",
-            "url": "${LIFEOS_MCP_URL:-http://localhost/mcp/lifeos}",
+            "url": "${JAZEOS_MCP_URL:-http://localhost/mcp/jazeos}",
             "headers": {
-                "Authorization": "Bearer ${LIFEOS_AGENT_TOKEN}"
+                "Authorization": "Bearer ${JAZEOS_AGENT_TOKEN}"
             }
         }
     }

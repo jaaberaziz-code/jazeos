@@ -7,13 +7,12 @@
                 "boost:mcp"
             ]
         },
-        "nightwatch": {
-            "command": "npx",
-            "args": [
-                "-y",
-                "mcp-remote",
-                "https://nightwatch.laravel.com/mcp"
-            ]
+        "jazeos": {
+            "type": "http",
+            "url": "${JAZEOS_MCP_URL:-http://localhost/mcp/jazeos}",
+            "headers": {
+                "Authorization": "Bearer ${JAZEOS_AGENT_TOKEN}"
+            }
         }
     }
 }

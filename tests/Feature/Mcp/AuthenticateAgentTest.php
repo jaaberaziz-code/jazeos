@@ -16,7 +16,7 @@ class AuthenticateAgentTest extends TestCase
 
     private function ping(array $headers = []): \Illuminate\Testing\TestResponse
     {
-        return $this->postJson('/mcp/lifeos', [
+        return $this->postJson('/mcp/jazeos', [
             'jsonrpc' => '2.0',
             'id' => 1,
             'method' => 'ping',
@@ -31,7 +31,7 @@ class AuthenticateAgentTest extends TestCase
 
     public function test_request_with_unknown_token_is_rejected(): void
     {
-        $this->ping(['Authorization' => 'Bearer lifeos_agent_unknown'])
+        $this->ping(['Authorization' => 'Bearer jazeos_agent_unknown'])
             ->assertStatus(401)
             ->assertJsonPath('error', 'Invalid or expired token.');
     }

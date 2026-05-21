@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Mcp;
 
-use App\Mcp\LifeOsServer;
+use App\Mcp\JazeOsServer;
 use App\Mcp\Tools\Bills\UpcomingBills;
 use App\Mcp\Tools\Contracts\ListContracts;
 use App\Mcp\Tools\CycleMenu\CurrentWeekCycleMenu;
@@ -60,7 +60,7 @@ class ToolsTest extends TestCase
         [$restricted] = AgentToken::issue($this->user, $this->tenant, 'restricted', ['subscriptions.list']);
         App::instance('agent.token', $restricted);
 
-        LifeOsServer::tool(ListExpenses::class)
+        JazeOsServer::tool(ListExpenses::class)
             ->assertHasErrors(['Agent token is not authorized to call [expenses.list].']);
     }
 
@@ -85,7 +85,7 @@ class ToolsTest extends TestCase
             'currency' => 'EUR',
         ]);
 
-        LifeOsServer::tool(ListExpenses::class)
+        JazeOsServer::tool(ListExpenses::class)
             ->assertOk()
             ->assertStructuredContent(fn (AssertableJson $json) => $json
                 ->where('count', 1)
@@ -99,7 +99,7 @@ class ToolsTest extends TestCase
         Subscription::factory()->create(['status' => 'active', 'next_billing_date' => now()->addDays(5)]);
         Contract::factory()->create(['status' => 'active', 'end_date' => now()->addDays(10)]);
 
-        LifeOsServer::tool(Summary::class)
+        JazeOsServer::tool(Summary::class)
             ->assertOk()
             ->assertStructuredContent(fn (AssertableJson $json) => $json
                 ->has('totals')
@@ -121,7 +121,7 @@ class ToolsTest extends TestCase
             'expense_date' => now()->subDay(),
         ]);
 
-        LifeOsServer::tool(ListExpenses::class, ['merchant' => 'Lidl'])
+        JazeOsServer::tool(ListExpenses::class, ['merchant' => 'Lidl'])
             ->assertOk()
             ->assertStructuredContent(fn (AssertableJson $json) => $json
                 ->where('count', 1)
@@ -142,7 +142,7 @@ class ToolsTest extends TestCase
             'billing_cycle' => 'monthly',
         ]);
 
-        LifeOsServer::tool(ListSubscriptions::class, ['due_within_days' => 7])
+        JazeOsServer::tool(ListSubscriptions::class, ['due_within_days' => 7])
             ->assertOk()
             ->assertStructuredContent(fn (AssertableJson $json) => $json
                 ->where('count', 1)
@@ -162,7 +162,7 @@ class ToolsTest extends TestCase
             'currency' => 'EUR',
         ]);
 
-        LifeOsServer::tool(Portfolio::class)
+        JazeOsServer::tool(Portfolio::class)
             ->assertOk()
             ->assertStructuredContent(fn (AssertableJson $json) => $json
                 ->where('count', 1)
@@ -184,7 +184,7 @@ class ToolsTest extends TestCase
             'payment_status' => 'pending',
         ]);
 
-        LifeOsServer::tool(UpcomingBills::class, ['within_days' => 7])
+        JazeOsServer::tool(UpcomingBills::class, ['within_days' => 7])
             ->assertOk()
             ->assertStructuredContent(fn (AssertableJson $json) => $json
                 ->where('count', fn ($value) => $value >= 1)
@@ -202,7 +202,7 @@ class ToolsTest extends TestCase
             'end_date' => now()->addDays(15),
         ]);
 
-        LifeOsServer::tool(ListContracts::class, ['expiring_within_days' => 30])
+        JazeOsServer::tool(ListContracts::class, ['expiring_within_days' => 30])
             ->assertOk()
             ->assertStructuredContent(fn (AssertableJson $json) => $json
                 ->where('count', 1)
@@ -220,7 +220,7 @@ class ToolsTest extends TestCase
             'warranty_expiration_date' => now()->addDays(20),
         ]);
 
-        LifeOsServer::tool(ListWarranties::class, ['expiring_within_days' => 60])
+        JazeOsServer::tool(ListWarranties::class, ['expiring_within_days' => 60])
             ->assertOk()
             ->assertStructuredContent(fn (AssertableJson $json) => $json
                 ->where('count', 1)
@@ -240,7 +240,7 @@ class ToolsTest extends TestCase
             'status' => 'partially_paid',
         ]);
 
-        LifeOsServer::tool(ListIou::class, ['direction' => 'owe'])
+        JazeOsServer::tool(ListIou::class, ['direction' => 'owe'])
             ->assertOk()
             ->assertStructuredContent(fn (AssertableJson $json) => $json
                 ->where('count', 1)
@@ -259,7 +259,7 @@ class ToolsTest extends TestCase
             'applied_at' => now()->subDays(3),
         ]);
 
-        LifeOsServer::tool(Pipeline::class, ['remote_only' => true])
+        JazeOsServer::tool(Pipeline::class, ['remote_only' => true])
             ->assertOk()
             ->assertStructuredContent(fn (AssertableJson $json) => $json
                 ->where('count', 1)
@@ -285,7 +285,7 @@ class ToolsTest extends TestCase
             'title' => 'Pasta',
         ]);
 
-        LifeOsServer::tool(CurrentWeekCycleMenu::class)
+        JazeOsServer::tool(CurrentWeekCycleMenu::class)
             ->assertOk()
             ->assertStructuredContent(fn (AssertableJson $json) => $json
                 ->where('menu.name', 'Standard')
@@ -302,7 +302,7 @@ class ToolsTest extends TestCase
             'data' => ['title' => 'Hello'],
         ]);
 
-        LifeOsServer::tool(ListNotifications::class, ['limit' => 10])
+        JazeOsServer::tool(ListNotifications::class, ['limit' => 10])
             ->assertOk()
             ->assertStructuredContent(fn (AssertableJson $json) => $json
                 ->where('count', fn ($value) => $value >= 1)

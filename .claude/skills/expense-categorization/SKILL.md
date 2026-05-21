@@ -1,6 +1,6 @@
 ---
 name: expense-categorization
-description: Maps merchants and text patterns to LifeOS expense categories. Used by the email-ingestion agent (and later the bank-statement processor) to assign a deterministic category instead of inventing one.
+description: Maps merchants and text patterns to JazeOS expense categories. Used by the email-ingestion agent (and later the bank-statement processor) to assign a deterministic category instead of inventing one.
 when_to_use: Triggered whenever an agent or assistant must assign an `expenses.create` payload's `category` and `subcategory` fields. Skip when the user has explicitly chosen a category in the source data.
 ---
 

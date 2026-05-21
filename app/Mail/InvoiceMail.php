@@ -31,8 +31,8 @@ class InvoiceMail extends Mailable
     public function envelope(): Envelope
     {
         $subject = $this->invoice->number
-            ? "Invoice {$this->invoice->number} from LifeOS"
-            : "New Invoice from LifeOS";
+            ? "Invoice {$this->invoice->number} from JazeOS"
+            : "New Invoice from JazeOS";
 
         return new Envelope(
             from: new Address(

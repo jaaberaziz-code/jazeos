@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
-use App\Ai\Agents\LifeOsAssistant;
+use App\Ai\Agents\JazeOsAssistant;
 use App\Http\Controllers\Controller;
 use App\Services\AssistantContextService;
 use Illuminate\Http\JsonResponse;
@@ -27,7 +27,7 @@ class AssistantController extends Controller
         try {
             $user = auth()->user();
 
-            $agent = new LifeOsAssistant($user, new AssistantContextService);
+            $agent = new JazeOsAssistant($user, new AssistantContextService);
             $agent->withPage($request->header('X-Current-Page', ''));
 
             if (! empty($validated['conversation_id'])) {
@@ -69,7 +69,7 @@ class AssistantController extends Controller
         try {
             $user = auth()->user();
 
-            $agent = new LifeOsAssistant($user, new AssistantContextService);
+            $agent = new JazeOsAssistant($user, new AssistantContextService);
             $agent->withPage($request->header('X-Current-Page', ''));
 
             if (! empty($validated['conversation_id'])) {

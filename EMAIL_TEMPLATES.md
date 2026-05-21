@@ -1,15 +1,15 @@
-# LifeOS Email Templates Documentation
+# JazeOS Email Templates Documentation
 
 ## Overview
 
-This document describes the branded email template system implemented for LifeOS, designed to match the project's design system and provide a consistent, professional user experience across all email communications.
+This document describes the branded email template system implemented for JazeOS, designed to match the project's design system and provide a consistent, professional user experience across all email communications.
 
 ## Design System Integration
 
 ### Visual Identity
-- **Typography**: Instrument Sans font family (consistent with the LifeOS design system)
+- **Typography**: Instrument Sans font family (consistent with the JazeOS design system)
 - **Color Palette**: Cream/warm neutrals with Laravel red accents
-- **Branding**: Consistent LifeOS logo and tagline in email headers
+- **Branding**: Consistent JazeOS logo and tagline in email headers
 - **Responsive Design**: Mobile-optimized layouts with proper breakpoints
 - **Dark Mode Support**: Automatic dark mode detection and styling
 
@@ -43,7 +43,7 @@ resources/views/emails/
 ## Base Layout Features
 
 ### Header Section
-- LifeOS logo with brand red color
+- JazeOS logo with brand red color
 - Consistent tagline: "Your Personal Life Management System"
 - Subtle gradient background
 

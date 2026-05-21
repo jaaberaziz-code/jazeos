@@ -46,7 +46,7 @@ class AuthenticationTest extends TestCase
 
         $this->assertAuthenticated();
         $response->assertRedirect('/');
-        $response->assertSessionHas('success', 'Welcome back to LifeOS!');
+        $response->assertSessionHas('success', 'Welcome back to JazeOS!');
     }
 
     public function test_users_can_authenticate_with_remember_me()

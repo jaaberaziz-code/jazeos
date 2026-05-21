@@ -113,11 +113,11 @@ class AgentsRun extends Command
             expiresAt: now()->addSeconds($definition->maxSessionDurationSeconds + 600),
         );
 
-        // Pass the plaintext into the lifeos MCP server config the API will
+        // Pass the plaintext into the jazeos MCP server config the API will
         // see, but never persist it on disk or in the run row.
         $servers = (array) Config::get('agents.mcp_servers', []);
-        if (isset($servers['lifeos'])) {
-            $servers['lifeos']['_plaintext'] = $plain;
+        if (isset($servers['jazeos'])) {
+            $servers['jazeos']['_plaintext'] = $plain;
             Config::set('agents.mcp_servers', $servers);
         }
 

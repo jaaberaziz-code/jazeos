@@ -6,7 +6,7 @@ Status: Draft for implementation
 
 ## 1. Executive Summary
 
-The LifeOS dashboard redesign aims to create a comprehensive, user-centric overview that integrates existing modules (Subscriptions, Contracts, Warranties, Investments, Expenses, Utility Bills, IOUs, Budgets, Job Applications) with planned modules (Invoicing, Fitness/Nutrition) into a cohesive, actionable interface.
+The JazeOS dashboard redesign aims to create a comprehensive, user-centric overview that integrates existing modules (Subscriptions, Contracts, Warranties, Investments, Expenses, Utility Bills, IOUs, Budgets, Job Applications) with planned modules (Invoicing, Fitness/Nutrition) into a cohesive, actionable interface.
 
 **Goals:**
 - Provide at-a-glance financial health and life management status
@@ -740,7 +740,7 @@ test('financial overview widget calculates net worth correctly', function () {
 
 ## 19. Conclusion
 
-This dashboard redesign transforms LifeOS from a module-centric application into a unified life management platform. The modular widget system provides flexibility while maintaining consistency. The integration of financial, health, and career management creates a holistic view of personal progress.
+This dashboard redesign transforms JazeOS from a module-centric application into a unified life management platform. The modular widget system provides flexibility while maintaining consistency. The integration of financial, health, and career management creates a holistic view of personal progress.
 
 **Key Benefits:**
 - **Actionable Insights:** Surface what matters most

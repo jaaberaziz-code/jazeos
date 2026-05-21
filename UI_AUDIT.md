@@ -1,8 +1,8 @@
-# LifeOS UI Audit — Branding & Design System Alignment
+# JazeOS UI Audit — Branding & Design System Alignment
 
 Date: 2025-12-10
 
-Scope: Analyse all forms and pages to verify alignment with the LifeOS design system and identify any that require redesign.
+Scope: Analyse all forms and pages to verify alignment with the JazeOS design system and identify any that require redesign.
 
 ## Summary
 - Overall alignment is strong. The application centralizes branding via a single layout (resources/views/layouts/app.blade.php) and shared Tailwind v4 theme tokens (resources/css/app.css).
@@ -70,7 +70,7 @@ Note: All of the above were verified to start with @extends('layouts.app'), ensu
 - Introduce input/textarea components similar to components/form/select.blade.php to reduce duplication.
 
 ## Conclusion
-The application already broadly adheres to the LifeOS design system via centralized layout and tokens. A light refactor to standardize remaining raw form controls will complete the alignment and ensure perfect consistency.
+The application already broadly adheres to the JazeOS design system via centralized layout and tokens. A light refactor to standardize remaining raw form controls will complete the alignment and ensure perfect consistency.
 
 ---
 
@@ -79,7 +79,7 @@ The application already broadly adheres to the LifeOS design system via centrali
 What was added in this PR:
 - Reused and extended shared Blade form components:
   - Existing: components/form/select.blade.php, components/form/input.blade.php, components/form/checkbox.blade.php
-  - Ensured these components consistently apply LifeOS tokens for borders, backgrounds, text, and focus states.
+  - Ensured these components consistently apply JazeOS tokens for borders, backgrounds, text, and focus states.
 - Refactored a representative high-traffic form to use components:
   - budgets/create.blade.php now uses x-form.select, x-form.input (including textarea type), and x-form.checkbox for consistent styling and states.
 - Left existing JavaScript behaviors intact (e.g., toggling custom category and date range) and ensured names/ids remain the same to avoid breaking validation or controllers.
@@ -296,7 +296,7 @@ Utility Bills module form standardization (this update):
   - Preserved routes, CSRF/method spoofing, and semantics; actions already used <x-button>.
 
 Why this helps:
-- Completes the Utility Bills module alignment with the LifeOS design system, ensuring consistent inputs, focus states, and dark mode, without altering behavior.
+- Completes the Utility Bills module alignment with the JazeOS design system, ensuring consistent inputs, focus states, and dark mode, without altering behavior.
 
 Subscriptions module form standardization (new in this pass):
 - subscriptions/create.blade.php
@@ -313,10 +313,10 @@ Subscriptions module form standardization (new in this pass):
   - Simplified tags submission to a single comma-separated string; back-end can split if needed (IDs/names unchanged).
 
 Why this helps:
-- Continues the UI updates by moving a high-traffic form to the LifeOS shared components, ensuring consistent tokens, focus states, and dark mode without changing functionality.
+- Continues the UI updates by moving a high-traffic form to the JazeOS shared components, ensuring consistent tokens, focus states, and dark mode without changing functionality.
 
 Why it helps:
-- Advances UI modernization by adopting shared LifeOS components for actions across Investments, ensuring consistent styling, focus states, and dark mode.
+- Advances UI modernization by adopting shared JazeOS components for actions across Investments, ensuring consistent styling, focus states, and dark mode.
 - Preserves existing semantics, routes, element names, IDs, and any JS behaviors (onclick/modal triggers).
 
 Follow-ups for Investments:

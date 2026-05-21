@@ -20,7 +20,7 @@ class DemoCycleMenuSeeder extends Seeder
         if (!$user) {
             $user = User::factory()->create([
                 'name' => 'Demo User',
-                'email' => 'demo@lifeos.test',
+                'email' => 'demo@jazeos.test',
             ]);
         }
 

@@ -164,7 +164,7 @@ export default function SettingsGmailReceipts({ connection, stats, error }: Gmai
                                 <h3 className="mb-4 text-lg font-medium text-blue-800 dark:text-blue-200">How It Works</h3>
                                 <ul className="space-y-2 text-sm text-blue-700 dark:text-blue-300">
                                     {[
-                                        'LifeOS scans your Gmail for receipt emails from common merchants',
+                                        'JazeOS scans your Gmail for receipt emails from common merchants',
                                         'Automatically extracts amount, merchant, date, and category',
                                         'Downloads and attaches receipt PDFs and images',
                                         'Creates expenses with "pending" status for your review',

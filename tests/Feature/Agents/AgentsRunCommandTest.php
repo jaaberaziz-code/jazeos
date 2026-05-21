@@ -30,7 +30,7 @@ class AgentsRunCommandTest extends TestCase
         File::put($this->agentsPath.'/email-ingestion/agent.json', json_encode([
             'slug' => 'email-ingestion',
             'model' => 'claude-opus-4-7',
-            'mcp_servers' => ['lifeos'],
+            'mcp_servers' => ['jazeos'],
             'allowed_tools' => ['expenses.create'],
             'feature_flag' => 'agents.email_ingestion.enabled',
         ]));
@@ -39,7 +39,7 @@ class AgentsRunCommandTest extends TestCase
         Config::set('agents.definitions_path', $this->agentsPath);
         Config::set('agents.flags.agents.email_ingestion.enabled', true);
         Config::set('agents.mcp_servers', [
-            'lifeos' => ['url' => 'http://localhost/mcp/lifeos', 'auth' => 'agent_token'],
+            'jazeos' => ['url' => 'http://localhost/mcp/jazeos', 'auth' => 'agent_token'],
         ]);
         Config::set('agents.anthropic.api_key', 'test');
         Config::set('agents.anthropic.base_url', 'https://api.anthropic.test');

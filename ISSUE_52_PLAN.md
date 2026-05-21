@@ -1,6 +1,6 @@
 # Issue #52: Fix Subscription Due Date Reminder Notifications
 
-**Issue URL**: https://github.com/davorminchorov/lifeos/issues/52
+**Issue URL**: https://github.com/davorminchorov/jazeos/issues/52
 **Title**: Fix the notifications for the due date reminders
 **Status**: Open (In Progress)
 **Branch**: `claude/plan-issue-52-h8QEK`
@@ -40,7 +40,7 @@ After thorough investigation of the codebase, I've identified **multiple potenti
 **Problem**: The Laravel scheduler requires a cron job to execute scheduled tasks.
 
 **Evidence**:
-- Schedule configured in `/home/user/lifeos/routes/console.php:18-21`
+- Schedule configured in `/home/user/jazeos/routes/console.php:18-21`
 - Command scheduled: `subscriptions:check-renewals --dispatch-job` at 09:00 daily
 - **Missing**: No evidence of cron job or scheduler daemon running
 
@@ -52,7 +52,7 @@ After thorough investigation of the codebase, I've identified **multiple potenti
 crontab -l | grep schedule:run
 
 # Expected cron entry (if missing, this is the problem):
-# * * * * * cd /path/to/lifeos && php artisan schedule:run >> /dev/null 2>&1
+# * * * * * cd /path/to/jazeos && php artisan schedule:run >> /dev/null 2>&1
 
 # Manual test
 php artisan schedule:list
@@ -63,9 +63,9 @@ php artisan schedule:test
 **Problem**: The notification job implements `ShouldQueue`, requiring queue workers.
 
 **Evidence**:
-- `SendSubscriptionRenewalNotifications` implements `ShouldQueue` (/home/user/lifeos/app/Jobs/SendSubscriptionRenewalNotifications.php:14)
-- `SubscriptionRenewalAlert` notification implements `ShouldQueue` (/home/user/lifeos/app/Notifications/SubscriptionRenewalAlert.php:11)
-- `SendSubscriptionRenewalNotification` listener implements `ShouldQueue` (/home/user/lifeos/app/Listeners/SendSubscriptionRenewalNotification.php:11)
+- `SendSubscriptionRenewalNotifications` implements `ShouldQueue` (/home/user/jazeos/app/Jobs/SendSubscriptionRenewalNotifications.php:14)
+- `SubscriptionRenewalAlert` notification implements `ShouldQueue` (/home/user/jazeos/app/Notifications/SubscriptionRenewalAlert.php:11)
+- `SendSubscriptionRenewalNotification` listener implements `ShouldQueue` (/home/user/jazeos/app/Listeners/SendSubscriptionRenewalNotification.php:11)
 - **Missing**: No evidence of queue workers processing jobs
 
 **Impact**: Jobs are queued but never processed, so notifications never send.
@@ -88,8 +88,8 @@ php artisan queue:work --once
 **Problem**: The job uses system-wide notification days, ignoring user-specific preferences.
 
 **Evidence**:
-- Job uses hardcoded days: `[7, 3, 1, 0]` (/home/user/lifeos/app/Jobs/SendSubscriptionRenewalNotifications.php:21)
-- Users can customize `days_before` in preferences (/home/user/lifeos/app/Models/UserNotificationPreference.php:40-43)
+- Job uses hardcoded days: `[7, 3, 1, 0]` (/home/user/jazeos/app/Jobs/SendSubscriptionRenewalNotifications.php:21)
+- Users can customize `days_before` in preferences (/home/user/jazeos/app/Models/UserNotificationPreference.php:40-43)
 - Job never calls `$user->getNotificationDays('subscription_renewal')`
 - All users get notified on the same days, regardless of preferences
 
@@ -113,7 +113,7 @@ Result:
 **Problem**: New users might not have notification preferences created.
 
 **Evidence**:
-- User model has `createDefaultNotificationPreferences()` method (/home/user/lifeos/app/Models/User.php:139-149)
+- User model has `createDefaultNotificationPreferences()` method (/home/user/jazeos/app/Models/User.php:139-149)
 - No evidence this is called automatically on user creation
 - Code has fallback to defaults, but could cause inconsistencies
 
@@ -157,7 +157,7 @@ WHERE status = 'active'
 crontab -e
 
 # Add this line:
-* * * * * cd /home/user/lifeos && php artisan schedule:run >> /dev/null 2>&1
+* * * * * cd /home/user/jazeos && php artisan schedule:run >> /dev/null 2>&1
 ```
 
 2. **Development environment** (Docker/Spin):
@@ -178,10 +178,10 @@ scheduler:
 
 1. **Production** (Supervisor configuration):
 ```ini
-# /etc/supervisor/conf.d/lifeos-worker.conf
-[program:lifeos-worker]
+# /etc/supervisor/conf.d/jazeos-worker.conf
+[program:jazeos-worker]
 process_name=%(program_name)s_%(process_num)02d
-command=php /home/user/lifeos/artisan queue:work --sleep=3 --tries=3 --max-time=3600
+command=php /home/user/jazeos/artisan queue:work --sleep=3 --tries=3 --max-time=3600
 autostart=true
 autorestart=true
 stopasgroup=true
@@ -189,7 +189,7 @@ killasgroup=true
 user=www-data
 numprocs=2
 redirect_stderr=true
-stdout_logfile=/home/user/lifeos/storage/logs/worker.log
+stdout_logfile=/home/user/jazeos/storage/logs/worker.log
 stopwaitsecs=3600
 ```
 
@@ -1048,14 +1048,14 @@ This fix pattern applies to other notification types:
 ## 11. References
 
 ### Code Files Referenced
-- `/home/user/lifeos/routes/console.php` - Scheduler configuration
-- `/home/user/lifeos/app/Jobs/SendSubscriptionRenewalNotifications.php` - Main job
-- `/home/user/lifeos/app/Listeners/SendSubscriptionRenewalNotification.php` - Event listener
-- `/home/user/lifeos/app/Notifications/SubscriptionRenewalAlert.php` - Notification class
-- `/home/user/lifeos/app/Models/User.php` - User model with preference methods
-- `/home/user/lifeos/app/Models/UserNotificationPreference.php` - Preference model
-- `/home/user/lifeos/app/Models/Subscription.php` - Subscription model
-- `/home/user/lifeos/app/Providers/EventServiceProvider.php` - Event mappings
+- `/home/user/jazeos/routes/console.php` - Scheduler configuration
+- `/home/user/jazeos/app/Jobs/SendSubscriptionRenewalNotifications.php` - Main job
+- `/home/user/jazeos/app/Listeners/SendSubscriptionRenewalNotification.php` - Event listener
+- `/home/user/jazeos/app/Notifications/SubscriptionRenewalAlert.php` - Notification class
+- `/home/user/jazeos/app/Models/User.php` - User model with preference methods
+- `/home/user/jazeos/app/Models/UserNotificationPreference.php` - Preference model
+- `/home/user/jazeos/app/Models/Subscription.php` - Subscription model
+- `/home/user/jazeos/app/Providers/EventServiceProvider.php` - Event mappings
 
 ### Documentation
 - [Laravel Task Scheduling](https://laravel.com/docs/10.x/scheduling)

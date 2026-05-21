@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Mcp;
 
 use App\Mail\WeeklyDigestMail;
-use App\Mcp\LifeOsServer;
+use App\Mcp\JazeOsServer;
 use App\Mcp\Tools\Digest\Send as DigestSend;
 use App\Models\AgentToken;
 use App\Models\DigestLog;
@@ -42,14 +42,14 @@ class Phase10DigestTest extends TestCase
     {
         return array_merge([
             'week_starts_on' => '2026-05-04',
-            'subject' => 'LifeOS week of 2026-05-04',
+            'subject' => 'JazeOS week of 2026-05-04',
             'body_text' => "# Weekly digest\n\nThis week was fine.",
         ], $overrides);
     }
 
     public function test_digest_send_queues_pending_action_without_sending(): void
     {
-        LifeOsServer::tool(DigestSend::class, $this->digestArgs())
+        JazeOsServer::tool(DigestSend::class, $this->digestArgs())
             ->assertOk()
             ->assertStructuredContent(function (AssertableJson $json): void {
                 $json->where('status', PendingAction::STATUS_PENDING)
@@ -64,15 +64,15 @@ class Phase10DigestTest extends TestCase
 
     public function test_digest_send_idempotent_on_week(): void
     {
-        LifeOsServer::tool(DigestSend::class, $this->digestArgs(['subject' => 'first']));
-        LifeOsServer::tool(DigestSend::class, $this->digestArgs(['subject' => 'second-different-text']));
+        JazeOsServer::tool(DigestSend::class, $this->digestArgs(['subject' => 'first']));
+        JazeOsServer::tool(DigestSend::class, $this->digestArgs(['subject' => 'second-different-text']));
 
         $this->assertSame(1, PendingAction::query()->count());
     }
 
     public function test_apply_sends_mail_and_records_log(): void
     {
-        LifeOsServer::tool(DigestSend::class, $this->digestArgs());
+        JazeOsServer::tool(DigestSend::class, $this->digestArgs());
 
         $action = PendingAction::query()->firstOrFail();
         app(PendingActionApplier::class)->apply($action, $this->user);
@@ -91,7 +91,7 @@ class Phase10DigestTest extends TestCase
     public function test_re_apply_for_same_week_short_circuits_without_double_send(): void
     {
         // First action queued + applied.
-        LifeOsServer::tool(DigestSend::class, $this->digestArgs());
+        JazeOsServer::tool(DigestSend::class, $this->digestArgs());
         $first = PendingAction::query()->firstOrFail();
         app(PendingActionApplier::class)->apply($first, $this->user);
 
@@ -119,7 +119,7 @@ class Phase10DigestTest extends TestCase
 
     public function test_revert_deletes_log_row_within_window(): void
     {
-        LifeOsServer::tool(DigestSend::class, $this->digestArgs());
+        JazeOsServer::tool(DigestSend::class, $this->digestArgs());
         $action = PendingAction::query()->firstOrFail();
         $applied = app(PendingActionApplier::class)->apply($action, $this->user);
         $this->assertSame(1, DigestLog::query()->count());
@@ -139,7 +139,7 @@ class Phase10DigestTest extends TestCase
         ])->save();
 
         // Week 1: still pending (no prior approval).
-        LifeOsServer::tool(DigestSend::class, $this->digestArgs(['week_starts_on' => '2026-05-04']));
+        JazeOsServer::tool(DigestSend::class, $this->digestArgs(['week_starts_on' => '2026-05-04']));
         $week1 = PendingAction::query()->firstOrFail();
         $this->assertSame(PendingAction::STATUS_PENDING, $week1->status);
         app(PendingActionApplier::class)->apply($week1, $this->user);
@@ -147,7 +147,7 @@ class Phase10DigestTest extends TestCase
         // Week 2: should auto-apply because a prior digest.send was approved
         // within the last 90 days.
         Mail::fake();
-        LifeOsServer::tool(DigestSend::class, $this->digestArgs(['week_starts_on' => '2026-05-11']));
+        JazeOsServer::tool(DigestSend::class, $this->digestArgs(['week_starts_on' => '2026-05-11']));
         $week2 = PendingAction::query()->where('payload->week_starts_on', '2026-05-11')->firstOrFail();
         $this->assertSame(PendingAction::STATUS_APPLIED, $week2->status);
         Mail::assertSent(WeeklyDigestMail::class);
@@ -159,7 +159,7 @@ class Phase10DigestTest extends TestCase
             'tool_auto_apply' => ['digest.send' => true],
         ])->save();
 
-        LifeOsServer::tool(DigestSend::class, $this->digestArgs());
+        JazeOsServer::tool(DigestSend::class, $this->digestArgs());
         $action = PendingAction::query()->firstOrFail();
 
         $this->assertSame(PendingAction::STATUS_PENDING, $action->status);

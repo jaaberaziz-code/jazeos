@@ -1,7 +1,7 @@
-# LifeOS Modern Design System
+# JazeOS Modern Design System
 
 ## Overview
-This document outlines a comprehensive modern design system to unify the LifeOS interface, bringing the sophisticated aesthetic from the welcome page throughout the entire application.
+This document outlines a comprehensive modern design system to unify the JazeOS interface, bringing the sophisticated aesthetic from the welcome page throughout the entire application.
 
 ## Current Issues Identified
 1. **Inconsistent Typography**: Welcome page uses Instrument Sans, app uses Figtree
@@ -98,7 +98,7 @@ This document outlines a comprehensive modern design system to unify the LifeOS 
 - Background: Cream with subtle warmth
 - Active states: Laravel red accents
 - Hover states: Warm transitions
-- Logo: Maintain LifeOS branding with new colors
+- Logo: Maintain JazeOS branding with new colors
 
 #### 5. Tables & Data Display
 - Header backgrounds: Light cream
@@ -173,7 +173,7 @@ This document outlines a comprehensive modern design system to unify the LifeOS 
 ## Error Pages
 
 ### Custom Error Page Design
-All error pages follow the LifeOS design system and provide consistent user experience:
+All error pages follow the JazeOS design system and provide consistent user experience:
 
 #### 404 - Page Not Found
 - **Color**: Accent red (#F53003) for error code
@@ -191,10 +191,10 @@ All error pages follow the LifeOS design system and provide consistent user expe
 - **Color**: Warning yellow (#F59E0B) for error code
 - **Content**: Maintenance explanation with improvement details
 - **Actions**: Check Again (reload)
-- **Features**: LifeOS-specific maintenance information, estimated completion time
+- **Features**: JazeOS-specific maintenance information, estimated completion time
 
 ### Error Page Guidelines
-- Consistent LifeOS branding and color scheme
+- Consistent JazeOS branding and color scheme
 - User-friendly, non-technical language
 - Clear call-to-action buttons
 - Appropriate icons and visual hierarchy

@@ -1,8 +1,20 @@
-# LifeOS
+# JazeOS
 
-![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/davorminchorov/lifeos?utm_source=oss&utm_medium=github&utm_campaign=davorminchorov%2Flifeos&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+![GitHub](https://img.shields.io/github/license/jaaberaziz-code/jazeos?color=blue)
+![GitHub stars](https://img.shields.io/github/stars/jaaberaziz-code/jazeos?style=social)
 
-LifeOS is a personal life management platform built with Laravel 13, React 19, Inertia v3, and TypeScript.
+# 🔥 JazeOS — Life Management, Your Way.
+
+> **منصة تسيير الحياة بالذكاء الاصطناعي — مفتوحة المصدر، Self-Hosted، بالدارجة.**
+
+JazeOS is a personal life management platform with integrated AI agents, built on **Laravel 13 + React 19 + TypeScript**.
+
+- 🧠 **AI Agents** — يتصرفو على Gmail، البنك، الاستثمارات والوظائف
+- 🔌 **MCP Protocol** — يتكامل مع Claude Desktop، Cursor، VS Code
+- 📦 **10+ Modules** — مصاريف، اشتراكات، استثمارات، ميزانية، عقود، ضمانات، فواتير، CRM، وجبات
+- 🛡️ **Self-Hosted** — بياناتك عندك، آمنة
+- 🗣️ **Darija Support** — واجهة و AI بالدارجة
+- 🔐 **Pending Actions** — AI يقترح، أنت توافق
 
 ## Tech Stack
 
@@ -18,7 +30,7 @@ LifeOS is a personal life management platform built with Laravel 13, React 19, I
 
 ## Features
 
-LifeOS provides a comprehensive suite of tools to manage various aspects of your personal life and finances:
+JazeOS provides a comprehensive suite of tools to manage various aspects of your personal life and finances:
 
 ### 🔄 Payment Subscriptions Tracking
 - Track all recurring payments (Netflix, Spotify, gym memberships, etc.)
@@ -196,7 +208,7 @@ This project uses ServerSideUp Spin for local development, which provides a stre
 
    ```bash
    git clone <your-repository-url>
-   cd lifeos
+   cd jazeos
    cp .env.example .env  # If .env doesn't exist
    ```
 

@@ -54,14 +54,14 @@ return [
     |--------------------------------------------------------------------------
     |
     | Each MCP server an agent.json references must be declared here. The
-    | "lifeos" entry points at our own MCP server (Phase 1) and uses an
+    | "jazeos" entry points at our own MCP server (Phase 1) and uses an
     | agent-bound token; "gmail" expects an externally-managed MCP endpoint
     | that the user connected through the Anthropic Console.
     |
     */
     'mcp_servers' => [
-        'lifeos' => [
-            'url' => env('LIFEOS_MCP_PUBLIC_URL', 'http://localhost/mcp/lifeos'),
+        'jazeos' => [
+            'url' => env('JAZEOS_MCP_PUBLIC_URL', 'http://localhost/mcp/jazeos'),
             'auth' => 'agent_token',
         ],
         'gmail' => [

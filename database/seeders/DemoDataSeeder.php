@@ -32,7 +32,7 @@ class DemoDataSeeder extends Seeder
         $this->command->info('Creating demo user and tenant...');
 
         $user = User::firstOrCreate(
-            ['email' => 'demo@lifeos.test'],
+            ['email' => 'demo@jazeos.test'],
             [
                 'name' => 'Demo User',
                 'password' => Hash::make('password'),
@@ -84,7 +84,7 @@ class DemoDataSeeder extends Seeder
         $this->command->info('Seeding invoicing...');
         $this->seedInvoicing($ctx);
 
-        $this->command->info('Demo data seeded! Login as demo@lifeos.test / password');
+        $this->command->info('Demo data seeded! Login as demo@jazeos.test / password');
     }
 
     private function seedSubscriptions(array $ctx): void

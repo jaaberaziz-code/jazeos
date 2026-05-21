@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the comprehensive conversion of LifeOS from a single-user application to a multi-tenant SaaS platform. The conversion implements row-level security with `tenant_id` columns, allowing users to manage multiple organizations while maintaining strict data isolation.
+This document describes the comprehensive conversion of JazeOS from a single-user application to a multi-tenant SaaS platform. The conversion implements row-level security with `tenant_id` columns, allowing users to manage multiple organizations while maintaining strict data isolation.
 
 ## Table of Contents
 

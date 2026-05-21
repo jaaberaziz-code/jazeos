@@ -21,7 +21,7 @@ class AgentRunRecorderTest extends TestCase
         return AgentDefinition::fromArray([
             'slug' => 'email-ingestion',
             'model' => 'claude-opus-4-7',
-            'mcp_servers' => ['lifeos'],
+            'mcp_servers' => ['jazeos'],
             'allowed_tools' => ['expenses.create'],
             'feature_flag' => 'agents.email_ingestion.enabled',
         ], 'prompt');

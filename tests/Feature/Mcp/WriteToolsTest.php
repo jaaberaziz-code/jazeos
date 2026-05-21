@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Mcp;
 
-use App\Mcp\LifeOsServer;
+use App\Mcp\JazeOsServer;
 use App\Mcp\Tools\Expenses\BulkImportExpenses;
 use App\Mcp\Tools\Expenses\CategorizeExpense;
 use App\Mcp\Tools\Expenses\CreateExpense;
@@ -50,7 +50,7 @@ class WriteToolsTest extends TestCase
 
     public function test_expenses_create_returns_pending_action(): void
     {
-        LifeOsServer::tool(CreateExpense::class, $this->expenseArgs())
+        JazeOsServer::tool(CreateExpense::class, $this->expenseArgs())
             ->assertOk()
             ->assertStructuredContent(fn (AssertableJson $json) => $json
                 ->has('pending_action_id')
@@ -66,8 +66,8 @@ class WriteToolsTest extends TestCase
 
     public function test_expenses_create_is_idempotent(): void
     {
-        LifeOsServer::tool(CreateExpense::class, $this->expenseArgs());
-        LifeOsServer::tool(CreateExpense::class, $this->expenseArgs());
+        JazeOsServer::tool(CreateExpense::class, $this->expenseArgs());
+        JazeOsServer::tool(CreateExpense::class, $this->expenseArgs());
 
         $this->assertSame(1, PendingAction::query()->count());
     }
@@ -77,7 +77,7 @@ class WriteToolsTest extends TestCase
         [$restricted] = AgentToken::issue($this->user, $this->tenant, 'restricted', ['expenses.list']);
         App::instance('agent.token', $restricted);
 
-        LifeOsServer::tool(CreateExpense::class, $this->expenseArgs())
+        JazeOsServer::tool(CreateExpense::class, $this->expenseArgs())
             ->assertHasErrors(['Agent token is not authorized to call [expenses.create].']);
 
         $this->assertSame(0, PendingAction::query()->count());
@@ -85,7 +85,7 @@ class WriteToolsTest extends TestCase
 
     public function test_expenses_bulk_import_creates_one_pending_row(): void
     {
-        LifeOsServer::tool(BulkImportExpenses::class, [
+        JazeOsServer::tool(BulkImportExpenses::class, [
             'items' => [
                 $this->expenseArgs(),
                 $this->expenseArgs(['amount' => 5.0, 'merchant' => 'Konzum']),
@@ -114,7 +114,7 @@ class WriteToolsTest extends TestCase
         // Restore primary acting user.
         $this->actingAs($this->user);
 
-        LifeOsServer::tool(CategorizeExpense::class, [
+        JazeOsServer::tool(CategorizeExpense::class, [
             'expense_id' => $foreign->id,
             'category' => 'travel',
         ])->assertHasErrors([
@@ -126,7 +126,7 @@ class WriteToolsTest extends TestCase
     {
         $expense = Expense::factory()->create();
 
-        LifeOsServer::tool(CategorizeExpense::class, [
+        JazeOsServer::tool(CategorizeExpense::class, [
             'expense_id' => $expense->id,
             'category' => 'travel',
         ])->assertOk();

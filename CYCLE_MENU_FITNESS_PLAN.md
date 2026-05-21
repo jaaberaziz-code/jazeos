@@ -514,7 +514,7 @@ return [
 
 ---
 
-This document defines the v1 scope for the Cycle Menu Fitness Plan module. Implementation should follow Laravel 12 best practices with proper testing, validation, and API resource patterns. The module integrates seamlessly into the LifeOS personal management platform.
+This document defines the v1 scope for the Cycle Menu Fitness Plan module. Implementation should follow Laravel 12 best practices with proper testing, validation, and API resource patterns. The module integrates seamlessly into the JazeOS personal management platform.
 
 ## 24. Cycle Menu MVP — Implementation Plan (Focused Scope)
 

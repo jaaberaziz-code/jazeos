@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Mcp;
 
-use App\Mcp\LifeOsServer;
+use App\Mcp\JazeOsServer;
 use App\Mcp\Tools\Bills\CreateUtilityBill;
 use App\Mcp\Tools\Contracts\CreateContract;
 use App\Mcp\Tools\Iou\CreateIou;
@@ -46,7 +46,7 @@ class Phase4WriteToolsTest extends TestCase
 
     public function test_subscriptions_create_records_pending_action(): void
     {
-        LifeOsServer::tool(CreateSubscription::class, [
+        JazeOsServer::tool(CreateSubscription::class, [
             'service_name' => 'Netflix',
             'cost' => 9.99,
             'currency' => 'EUR',
@@ -62,7 +62,7 @@ class Phase4WriteToolsTest extends TestCase
 
     public function test_apply_subscriptions_create_writes_with_agent_attribution(): void
     {
-        LifeOsServer::tool(CreateSubscription::class, [
+        JazeOsServer::tool(CreateSubscription::class, [
             'service_name' => 'Netflix',
             'category' => 'streaming',
             'cost' => 9.99,
@@ -83,7 +83,7 @@ class Phase4WriteToolsTest extends TestCase
 
     public function test_contracts_create_records_pending_action(): void
     {
-        LifeOsServer::tool(CreateContract::class, [
+        JazeOsServer::tool(CreateContract::class, [
             'title' => 'Office Lease',
             'counterparty' => 'Landlord Co',
             'contract_type' => 'lease',
@@ -105,15 +105,15 @@ class Phase4WriteToolsTest extends TestCase
             'warranty_expiration_date' => '2027-05-01',
         ];
 
-        LifeOsServer::tool(CreateWarranty::class, $args);
-        LifeOsServer::tool(CreateWarranty::class, $args);
+        JazeOsServer::tool(CreateWarranty::class, $args);
+        JazeOsServer::tool(CreateWarranty::class, $args);
 
         $this->assertSame(1, PendingAction::query()->where('tool', 'warranties.create')->count());
     }
 
     public function test_iou_create_records_pending_action(): void
     {
-        LifeOsServer::tool(CreateIou::class, [
+        JazeOsServer::tool(CreateIou::class, [
             'type' => 'owed',
             'person_name' => 'Alex',
             'amount' => 50,
@@ -128,7 +128,7 @@ class Phase4WriteToolsTest extends TestCase
 
     public function test_utility_bills_create_records_pending_action(): void
     {
-        LifeOsServer::tool(CreateUtilityBill::class, [
+        JazeOsServer::tool(CreateUtilityBill::class, [
             'utility_type' => 'electricity',
             'service_provider' => 'EVN',
             'bill_amount' => 100,
@@ -143,7 +143,7 @@ class Phase4WriteToolsTest extends TestCase
 
     public function test_jobs_update_status_requires_existing_application(): void
     {
-        LifeOsServer::tool(UpdateJobStatus::class, [
+        JazeOsServer::tool(UpdateJobStatus::class, [
             'job_application_id' => 9999,
             'status' => 'interviewing',
         ])->assertHasErrors(['Job application [9999] not found in this tenant.']);
@@ -156,7 +156,7 @@ class Phase4WriteToolsTest extends TestCase
             'job_title' => 'Engineer',
         ]);
 
-        LifeOsServer::tool(UpdateJobStatus::class, [
+        JazeOsServer::tool(UpdateJobStatus::class, [
             'job_application_id' => $app->id,
             'status' => 'interviewing',
         ])->assertOk();
@@ -168,7 +168,7 @@ class Phase4WriteToolsTest extends TestCase
     {
         $app = JobApplication::factory()->create();
 
-        LifeOsServer::tool(AddInterview::class, [
+        JazeOsServer::tool(AddInterview::class, [
             'job_application_id' => $app->id,
             'scheduled_at' => '2026-05-10T14:00:00Z',
             'interview_type' => 'video',
@@ -191,7 +191,7 @@ class Phase4WriteToolsTest extends TestCase
 
         $this->actingAs($this->user);
 
-        LifeOsServer::tool(UpdateJobStatus::class, [
+        JazeOsServer::tool(UpdateJobStatus::class, [
             'job_application_id' => $foreignApp->id,
             'status' => 'rejected',
         ])->assertHasErrors([

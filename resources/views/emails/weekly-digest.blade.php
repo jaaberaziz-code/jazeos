@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>LifeOS weekly digest — week of {{ $weekStartsOn }}</title>
+    <title>JazeOS weekly digest — week of {{ $weekStartsOn }}</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 720px; margin: 24px auto; color: #1f2937; line-height: 1.5; padding: 0 16px; }
         h1 { font-size: 20px; margin-bottom: 0; }
@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-    <h1>LifeOS weekly digest</h1>
+    <h1>JazeOS weekly digest</h1>
     <div class="meta">Week of {{ $weekStartsOn }}</div>
 
     @if ($bodyHtml)

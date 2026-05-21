@@ -1,10 +1,10 @@
-# LifeOS Managed Agents — Agent reference
+# JazeOS Managed Agents — Agent reference
 
-This file lists the Managed Agents that ship with LifeOS, what they're allowed to touch, how to enable them, and how they connect to the rest of the system. Each agent is a directory under `agents/`; runtime config (URLs, secrets, feature flags) lives in `config/agents.php`.
+This file lists the Managed Agents that ship with JazeOS, what they're allowed to touch, how to enable them, and how they connect to the rest of the system. Each agent is a directory under `agents/`; runtime config (URLs, secrets, feature flags) lives in `config/agents.php`.
 
 ## Architecture in one paragraph
 
-`php artisan agents:run {slug} [--tenant=...]` resolves an agent's `agent.json`, issues a short-lived agent token bound to (user, tenant) with the allowed-tool list, asks the Anthropic Managed Agents API to create a session pointed at the LifeOS MCP server (and any other MCP servers declared in the agent definition), then streams events into `agent_runs` + `agent_run_events`. Every write tool the session calls produces a row in `pending_actions`; nothing mutates live data without human approval.
+`php artisan agents:run {slug} [--tenant=...]` resolves an agent's `agent.json`, issues a short-lived agent token bound to (user, tenant) with the allowed-tool list, asks the Anthropic Managed Agents API to create a session pointed at the JazeOS MCP server (and any other MCP servers declared in the agent definition), then streams events into `agent_runs` + `agent_run_events`. Every write tool the session calls produces a row in `pending_actions`; nothing mutates live data without human approval.
 
 Visual:
 
@@ -30,7 +30,7 @@ Visual:
                               │
                               ▼
                 ┌────────────────────────────┐
-                │ /mcp/lifeos (this app)     │
+                │ /mcp/jazeos (this app)     │
                 │ auth.agent middleware →    │
                 │ Mcp\Tools\* → services →   │
                 │ pending_actions queue      │
@@ -48,7 +48,7 @@ Reads receipt-shaped messages from the connected Gmail mailbox and proposes one 
 | Definition | `agents/email-ingestion/agent.json` + `system.md` |
 | Skill | `.claude/skills/expense-categorization/SKILL.md` |
 | Model | `claude-opus-4-7` (fallback `claude-sonnet-4-6`) |
-| MCP servers | `lifeos`, `gmail` |
+| MCP servers | `jazeos`, `gmail` |
 | Allowed tools | `expenses.list`, `expenses.create`, `expenses.bulkImport` |
 | Limits | 10 min session, 200 tool calls |
 | Feature flag | `AGENT_EMAIL_INGESTION_ENABLED` (env) → `agents.flags.agents.email_ingestion.enabled` (config) |
@@ -74,7 +74,7 @@ Reads receipt-shaped messages from the connected Gmail mailbox and proposes one 
 ## Enabling an agent
 
 1. **Confirm config.** `ANTHROPIC_API_KEY` must be set; the env-driven flag for the agent must be true (e.g. `AGENT_EMAIL_INGESTION_ENABLED=true`).
-2. **Confirm MCP server URLs.** `LIFEOS_MCP_PUBLIC_URL` must point at a publicly reachable URL of `/mcp/lifeos`. Phase 3 deliberately doesn't ship a tunnel playbook — Managed Agents reaches the deployed/staging server, not localhost.
+2. **Confirm MCP server URLs.** `JAZEOS_MCP_PUBLIC_URL` must point at a publicly reachable URL of `/mcp/jazeos`. Phase 3 deliberately doesn't ship a tunnel playbook — Managed Agents reaches the deployed/staging server, not localhost.
 3. **Confirm the skill.** For `email-ingestion`, `.claude/skills/expense-categorization/SKILL.md` must contain the user's category map and vendor aliases. The agent's system prompt requires it.
 4. **Run once manually.** `php artisan agents:run email-ingestion --tenant=<slug>` (or `--dry-run` first to confirm config without calling the API). Inspect the resulting `AgentRun` at `/dashboard/agents/{id}`.
 5. **Schedule kicks in automatically.** The cron entry in `routes/console.php` runs every 30 minutes for every tenant that hasn't set `agents_writes_disabled = true`.
